@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "clangsharppinvokegenerator": {
+      "version": "18.1.0.1",
+      "commands": [
+        "ClangSharpPInvokeGenerator"
+      ]
+    }
+  }
+}
