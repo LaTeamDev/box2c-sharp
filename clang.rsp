@@ -29,7 +29,6 @@ unix-types
 ./Native/box2c/include/box2d/box2d.h
 ./Native/box2c/include/box2d/collision.h
 ./Native/box2c/include/box2d/id.h
-./Native/box2c/include/box2d/math_functions.h
 ./Native/box2c/include/box2d/types.h
 --methodClassName
 B2
