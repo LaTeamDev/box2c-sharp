@@ -187,7 +187,6 @@ public class Body : IDisposable {
     public AABB ComputeAABB() => B2.Body_ComputeAABB(_id);
 
     public Shape CreateCircleShape(ShapeDef def, Circle circle) {
-        //i haven't pinned it, will it work?
         return new Shape(B2.CreateCircleShape(_id,  ref def._shapeDef, ref circle));
     }
 

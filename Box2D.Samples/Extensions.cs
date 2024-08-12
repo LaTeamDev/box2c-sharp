@@ -6,6 +6,6 @@ namespace Box2D;
 
 public static class Extensions {
     public unsafe static Color ToRaylib(this b2HexColor color) {
-        return *(Color*)Unsafe.AsPointer(ref color);
+        return *(Color*)Unsafe.AsPointer(ref color) with { a = 255}; //hope this will be stable enough
     }
 }

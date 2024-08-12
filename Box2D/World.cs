@@ -30,4 +30,9 @@ public class World : IDisposable {
         using var pin = bodyDef._b2BodyDef.GcPin();
         return new Body(B2.CreateBody(_id, pin.Pointer));
     }
+
+    public static float LengthUnitsPerMeter {
+        get => B2.GetLengthUnitsPerMeter();
+        set => B2.SetLengthUnitsPerMeter(value);
+    }
 }

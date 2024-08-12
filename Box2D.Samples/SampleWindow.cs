@@ -13,7 +13,8 @@ public class SampleWindow : Window {
         CurrentSampleIndex >= 0 ? 
             Sample.All[CurrentSampleIndex] : null;
     public override void Load() {
-        Sample.Register(new Samples.StackSample());
+        World.LengthUnitsPerMeter = 128f;
+        Sample.Register(new Samples.SpawnSample());
         CurrentSample?.Load();
         _sampleList.Position = Vector2.One * 32f;
         _sampleList.Size = new Vector2(256f, GetScreenHeight() - 64f);

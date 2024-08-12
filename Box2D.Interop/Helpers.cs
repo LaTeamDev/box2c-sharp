@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Box2D.Interop; 
 
@@ -36,4 +37,23 @@ public partial class B2 {
     public static unsafe int Shape_GetContactData(b2ShapeId shapeId, ref b2ContactData[] contactData) {
         return Shape_GetContactData(shapeId, (b2ContactData*)Unsafe.AsPointer(ref contactData), contactData.Length);
     }
+    
+    static B2() {
+        unsafe {
+            SetAssertFcn(Marshal.GetFunctionPointerForDelegate(B2AssertFcn));
+        }
+    }
+
+    private static unsafe int B2AssertFcn(sbyte* condition, sbyte* name, int number) {
+        var conditionStr = Marshal.PtrToStringUTF8((IntPtr) condition);
+        var nameStr = Marshal.PtrToStringUTF8((IntPtr) name);
+        throw new Box2DAssertionException($"{conditionStr} at {nameStr}:{number}");
+    }
+
+    //this stuff is included in math_function.h that we dont generate bindings for
+    [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2SetLengthUnitsPerMeter", ExactSpelling = true)]
+    public static extern void SetLengthUnitsPerMeter(float lengthUnits);
+
+    [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2GetLengthUnitsPerMeter", ExactSpelling = true)]
+    public static extern float GetLengthUnitsPerMeter();
 }

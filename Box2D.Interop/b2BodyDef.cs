@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace Box2D.Interop;
 
 public unsafe partial struct b2BodyDef

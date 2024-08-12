@@ -5,104 +5,75 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public unsafe class DebugDraw {
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void Polygon(Vector2* pos, int count, b2HexColor color, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void SolidPolygon(Box2D.Transform transform, Vector2* pos, int count, b2HexColor color, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void Circle(Vector2 pos, float radius, b2HexColor color, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void SolidCircle(Box2D.Transform transform, float radius, b2HexColor color, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void Capsule(Vector2 start, Vector2 end, float radius, b2HexColor color, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void SolidCapsule(Vector2 start, Vector2 end, float radius, b2HexColor color, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void Segment(Vector2 start, Vector2 end, b2HexColor color, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void Transform(Box2D.Transform transform, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void Point(Vector2 pos, float radius, b2HexColor color, void* sth);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void String(Vector2 pos, string str, void* sth);
-
-    private Polygon? _drawPolygon;
+    
     public Polygon? DrawPolygon {
-        get => _drawPolygon;
-        set {
-            _drawPolygon = value;
-            _b2DebugDraw.DrawPolygon = Marshal.GetFunctionPointerForDelegate(_drawPolygon);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<Polygon?>(_b2DebugDraw.DrawPolygon);
+        set => _b2DebugDraw.DrawPolygon = Marshal.GetFunctionPointerForDelegate(value);
     }
-    private SolidPolygon? _drawSolidPolygon;
+
     public SolidPolygon? DrawSolidPolygon {
-        get => _drawSolidPolygon;
-        set {
-            _drawSolidPolygon = value;
-            _b2DebugDraw.DrawSolidPolygon = Marshal.GetFunctionPointerForDelegate(_drawSolidPolygon);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<SolidPolygon?>(_b2DebugDraw.DrawSolidPolygon);
+        set => _b2DebugDraw.DrawSolidPolygon = Marshal.GetFunctionPointerForDelegate(value);
     }
 
-    private Circle? _drawCircle;
     public Circle? DrawCircle {
-        get => _drawCircle;
-        set {
-            _drawCircle = value;
-            _b2DebugDraw.DrawCircle = Marshal.GetFunctionPointerForDelegate(_drawCircle);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<Circle?>(_b2DebugDraw.DrawCircle);
+        set => _b2DebugDraw.DrawCircle = Marshal.GetFunctionPointerForDelegate(value);
     }
 
-    private SolidCircle? _drawSolidCircle;
     public SolidCircle? DrawSolidCircle {
-        get => _drawSolidCircle;
-        set {
-            _drawSolidCircle = value;
-            _b2DebugDraw.DrawSolidCircle = Marshal.GetFunctionPointerForDelegate(_drawSolidCircle);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<SolidCircle?>(_b2DebugDraw.DrawSolidCircle);
+        set => _b2DebugDraw.DrawSolidCircle = Marshal.GetFunctionPointerForDelegate(value);
     }
 
-    private Capsule? _drawCapsule;
     public Capsule? DrawCapsule {
-        get => _drawCapsule;
-        set {
-            _drawCapsule = value;
-            _b2DebugDraw.DrawCapsule = Marshal.GetFunctionPointerForDelegate(_drawCapsule);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<Capsule?>(_b2DebugDraw.DrawCapsule);
+        set => _b2DebugDraw.DrawCapsule = Marshal.GetFunctionPointerForDelegate(value);
     }
 
-    private SolidCapsule? _drawSolidCapsule;
     public SolidCapsule? DrawSolidCapsule {
-        get => _drawSolidCapsule;
-        set {
-            _drawSolidCapsule = value;
-            _b2DebugDraw.DrawSolidCapsule = Marshal.GetFunctionPointerForDelegate(_drawSolidCapsule);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<SolidCapsule?>(_b2DebugDraw.DrawSolidCapsule);
+        set => _b2DebugDraw.DrawSolidCapsule = Marshal.GetFunctionPointerForDelegate(value);
     }
 
-    private Segment? _drawSegment;
     public Segment? DrawSegment {
-        get => _drawSegment;
-        set {
-            _drawSegment = value;
-            _b2DebugDraw.DrawSegment = Marshal.GetFunctionPointerForDelegate(_drawSegment);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<Segment?>(_b2DebugDraw.DrawSegment);
+        set => _b2DebugDraw.DrawSegment = Marshal.GetFunctionPointerForDelegate(value);
     }
 
-    private Transform? _drawTransform;
     public Transform? DrawTransform {
-        get => _drawTransform;
-        set {
-            _drawTransform = value;
-            _b2DebugDraw.DrawTransform = Marshal.GetFunctionPointerForDelegate(_drawTransform);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<Transform?>(_b2DebugDraw.DrawTransform);
+        set => _b2DebugDraw.DrawTransform = Marshal.GetFunctionPointerForDelegate(value);
     }
 
-    private Point? _drawPoint;
     public Point? DrawPoint {
-        get => _drawPoint;
-        set {
-            _drawPoint = value;
-            _b2DebugDraw.DrawPoint = Marshal.GetFunctionPointerForDelegate(_drawPoint);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<Point?>(_b2DebugDraw.DrawPoint);
+        set => _b2DebugDraw.DrawPoint = Marshal.GetFunctionPointerForDelegate(value);
     }
 
-    private String? _drawString;
     public String? DrawString {
-        get => _drawString;
-        set {
-            _drawString = value;
-            _b2DebugDraw.DrawString = Marshal.GetFunctionPointerForDelegate(_drawString);
-        }
+        get => Marshal.GetDelegateForFunctionPointer<String?>(_b2DebugDraw.DrawString);
+        set => _b2DebugDraw.DrawString = Marshal.GetFunctionPointerForDelegate(value);
     }
     
     public bool UseDrawingBounds {
@@ -125,7 +96,7 @@ public unsafe class DebugDraw {
         set => _b2DebugDraw.drawJointExtras = value;
     }
 
-    public bool DrawAabBs {
+    public bool DrawAABBs {
         get => _b2DebugDraw.drawAABBs;
         set => _b2DebugDraw.drawAABBs = value;
     }
