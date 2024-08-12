@@ -52,3 +52,7 @@ b2Rot=@Rotation
 b2Transform=@Transform
 b2AABB=@AABB
 b2Mat22=@Matrix2x2
+b2Circle=@Circle
+b2Capsule=@Capsule
+b2Polygon=@Polygon
+b2Segment=@Segment

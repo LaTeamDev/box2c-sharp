@@ -5,7 +5,7 @@ public partial struct b2SmoothSegment
     [NativeTypeName("b2Vec2")]
     public System.Numerics.Vector2 ghost1;
 
-    public b2Segment segment;
+    public Segment segment;
 
     [NativeTypeName("b2Vec2")]
     public System.Numerics.Vector2 ghost2;

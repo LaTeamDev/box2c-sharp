@@ -1,16 +1,26 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Box2D.Interop;
 
 namespace Box2D; 
 
 public class Body : IDisposable {
-    private b2BodyId _id;
+    private readonly b2BodyId _id;
     public Body(b2BodyId id) {
         _id = id;
     }
 
     public void Dispose() {
         B2.DestroyBody(_id);
+    }
+    
+    public override int GetHashCode() => _id.GetHashCode();
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Body body)
+            return false;
+        return _id.Equals(body._id);
     }
     
     public bool IsValid => B2.Body_IsValid(_id);
@@ -116,5 +126,80 @@ public class Body : IDisposable {
     public bool Awake {
         get => B2.Body_IsAwake(_id);
         set => B2.Body_SetAwake(_id, value);
+    }
+
+    public bool SleepEnabled {
+        get => B2.Body_IsSleepEnabled(_id);
+        set => B2.Body_EnableSleep(_id, value);
+    }
+
+    public float SleepThreshold {
+        get => B2.Body_GetSleepThreshold(_id);
+        set => B2.Body_SetSleepThreshold(_id, value);
+    }
+
+    public bool Enabled {
+        get => B2.Body_IsEnabled(_id);
+        set { if (value) B2.Body_Enable(_id); else B2.Body_Disable(_id); }
+    }
+
+    public bool FixedRotation {
+        get => B2.Body_IsFixedRotation(_id);
+        set => B2.Body_SetFixedRotation(_id, value);
+    }
+
+    public bool Bullet {
+        get => B2.Body_IsBullet(_id);
+        set => B2.Body_SetBullet(_id, value);
+    }
+
+    public bool HitEvents {
+        set => B2.Body_EnableHitEvents(_id, value);
+    }
+
+    public int GetShapeCount() => B2.Body_GetShapeCount(_id);
+
+    public List<Shape> GetShapes() {
+        var array = new b2ShapeId[GetShapeCount()];
+        var count = B2.Body_GetShapes(_id, ref array);
+        var stuff = array.ToList().GetRange(0, count);
+        return stuff.Select(shapeId => new Shape(shapeId)).ToList();
+    }
+
+    public int GetJointCount() => B2.Body_GetJointCount(_id);
+    
+    public List<Joint> GetJoints() {
+        var array = new b2JointId[GetJointCount()];
+        var count = B2.Body_GetJoints(_id, ref array);
+        var stuff = array.ToList().GetRange(0, count);
+        return stuff.Select(jointId => new Joint(jointId)).ToList();
+    }
+
+    public int GetContactCapacity() => B2.Body_GetContactCapacity(_id);
+
+    public List<ContactData> GetContactData() {
+        var array = new b2ContactData[GetContactCapacity()];
+        var count = B2.Body_GetContactData(_id, ref array);
+        var stuff = array.ToList().GetRange(0, count);
+        return stuff.Select(contactData => new ContactData(contactData)).ToList();
+    }
+
+    public AABB ComputeAABB() => B2.Body_ComputeAABB(_id);
+
+    public Shape CreateCircleShape(ShapeDef def, Circle circle) {
+        //i haven't pinned it, will it work?
+        return new Shape(B2.CreateCircleShape(_id,  ref def._shapeDef, ref circle));
+    }
+
+    public Shape CreateSegmentShape(ShapeDef def, Segment segment) {
+        return new Shape(B2.CreateSegmentShape(_id,  ref def._shapeDef, ref segment));
+    }
+    
+    public Shape CreateCapsuleShape(ShapeDef def, Capsule capsule) {
+        return new Shape(B2.CreateCapsuleShape(_id,  ref def._shapeDef, ref capsule));
+    }
+    
+    public Shape CreatePolygonShape(ShapeDef def, Polygon polygon) {
+        return new Shape(B2.CreatePolygonShape(_id,  ref def._shapeDef, ref polygon));
     }
 }

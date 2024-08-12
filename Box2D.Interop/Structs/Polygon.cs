@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 
 namespace Box2D.Interop;
 
-public partial struct b2Polygon
+public partial struct Polygon
 {
     [NativeTypeName("b2Vec2[8]")]
     public _vertices_e__FixedBuffer vertices;
