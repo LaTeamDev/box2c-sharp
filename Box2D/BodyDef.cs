@@ -4,7 +4,7 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class BodyDef {
-    internal b2BodyDef _b2BodyDef;
+    internal b2BodyDef _b2BodyDef = B2.DefaultBodyDef();
     
     public BodyType Type {
         get => (BodyType)_b2BodyDef.type;

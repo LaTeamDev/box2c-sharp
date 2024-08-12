@@ -877,10 +877,10 @@ public static unsafe partial class B2
     public static extern bool IsValidRay([NativeTypeName("const b2RayCastInput *")] b2RayCastInput* input);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakePolygon", ExactSpelling = true)]
-    public static extern Polygon MakePolygon([NativeTypeName("const b2Hull *")] b2Hull* hull, float radius);
+    public static extern Polygon MakePolygon([NativeTypeName("const b2Hull *")] Hull* hull, float radius);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeOffsetPolygon", ExactSpelling = true)]
-    public static extern Polygon MakeOffsetPolygon([NativeTypeName("const b2Hull *")] b2Hull* hull, float radius, [NativeTypeName("b2Transform")] Transform transform);
+    public static extern Polygon MakeOffsetPolygon([NativeTypeName("const b2Hull *")] Hull* hull, float radius, [NativeTypeName("b2Transform")] Transform transform);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeSquare", ExactSpelling = true)]
     public static extern Polygon MakeSquare(float h);
@@ -959,11 +959,11 @@ public static unsafe partial class B2
     public static extern b2CastOutput ShapeCastPolygon([NativeTypeName("const b2ShapeCastInput *")] b2ShapeCastInput* input, [NativeTypeName("const b2Polygon *")] Polygon* shape);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputeHull", ExactSpelling = true)]
-    public static extern b2Hull ComputeHull([NativeTypeName("const b2Vec2 *")] System.Numerics.Vector2* points, [NativeTypeName("int32_t")] int count);
+    public static extern Hull ComputeHull([NativeTypeName("const b2Vec2 *")] System.Numerics.Vector2* points, [NativeTypeName("int32_t")] int count);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ValidateHull", ExactSpelling = true)]
     [return: NativeTypeName("_Bool")]
-    public static extern bool ValidateHull([NativeTypeName("const b2Hull *")] b2Hull* hull);
+    public static extern bool ValidateHull([NativeTypeName("const b2Hull *")] Hull* hull);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2SegmentDistance", ExactSpelling = true)]
     public static extern b2SegmentDistanceResult SegmentDistance([NativeTypeName("b2Vec2")] System.Numerics.Vector2 p1, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 q1, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 p2, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 q2);

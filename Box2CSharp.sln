@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box2D.Interop", "Box2D.Inte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box2D.Interop.UnitTests", "Box2D.Interop.UnitTests\Box2D.Interop.UnitTests.csproj", "{6BF9B6A4-341C-4A53-8233-AA8D4FB33FD7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box2D.Samples", "Box2D.Samples\Box2D.Samples.csproj", "{7834546C-8E32-45E4-91CE-4E5A5D598A4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{6BF9B6A4-341C-4A53-8233-AA8D4FB33FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BF9B6A4-341C-4A53-8233-AA8D4FB33FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BF9B6A4-341C-4A53-8233-AA8D4FB33FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7834546C-8E32-45E4-91CE-4E5A5D598A4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7834546C-8E32-45E4-91CE-4E5A5D598A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7834546C-8E32-45E4-91CE-4E5A5D598A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7834546C-8E32-45E4-91CE-4E5A5D598A4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

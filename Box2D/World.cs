@@ -9,6 +9,8 @@ public class World : IDisposable {
         using var worldDef = def._b2WorldDef.GcPin();
         _id = B2.CreateWorld(worldDef.Pointer);
     }
+
+    public World() : this(new WorldDef()) {}
     
     public void Dispose() {
         B2.DestroyWorld(_id);

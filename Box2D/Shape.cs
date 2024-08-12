@@ -112,4 +112,7 @@ public class Shape : IDisposable {
     public AABB AABB {
         get => B2.Shape_GetAABB(_id);
     }
+
+    public Vector2 GetClosestPoint(Vector2 target) =>
+        B2.Shape_GetClosestPoint(_id, target);
 }

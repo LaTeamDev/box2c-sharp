@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>default</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyName>Box2CSharp</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

@@ -56,3 +56,4 @@ b2Circle=@Circle
 b2Capsule=@Capsule
 b2Polygon=@Polygon
 b2Segment=@Segment
+b2Hull=@Hull
