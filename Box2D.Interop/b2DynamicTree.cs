@@ -22,9 +22,11 @@ public unsafe partial struct b2DynamicTree
     [NativeTypeName("int32_t *")]
     public int* leafIndices;
 
-    public b2AABB* leafBoxes;
+    [NativeTypeName("b2AABB *")]
+    public AABB* leafBoxes;
 
-    public b2Vec2* leafCenters;
+    [NativeTypeName("b2Vec2 *")]
+    public System.Numerics.Vector2* leafCenters;
 
     [NativeTypeName("int32_t *")]
     public int* binIndices;

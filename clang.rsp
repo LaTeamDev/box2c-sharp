@@ -39,10 +39,16 @@ Box2D.Interop
 --prefixStrip
 b2
 --test-output
-./Box2D.Interop.Tests
+./Box2D.Interop.UnitTests
 --libraryPath
 box2d
 --include-directory
 /usr/lib/clang/18
 /usr/lib/clang/18/include
 /usr/include
+-r
+b2Vec2=@System.Numerics.Vector2
+b2Rot=@Rotation
+b2Transform=@Transform
+b2AABB=@AABB
+b2Mat22=@Matrix2x2

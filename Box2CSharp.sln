@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box2D", "Box2D\Box2D.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box2D.Interop", "Box2D.Interop\Box2D.Interop.csproj", "{FA476713-06E7-4651-9F21-8D3A3066201F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box2D.Interop.Tests", "Box2D.Interop.Tests\Box2D.Interop.Tests.csproj", "{6BF9B6A4-341C-4A53-8233-AA8D4FB33FD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box2D.Interop.UnitTests", "Box2D.Interop.UnitTests\Box2D.Interop.UnitTests.csproj", "{6BF9B6A4-341C-4A53-8233-AA8D4FB33FD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,7 +6,8 @@ public unsafe partial struct b2MotorJointDef
 
     public b2BodyId bodyIdB;
 
-    public b2Vec2 linearOffset;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 linearOffset;
 
     public float angularOffset;
 

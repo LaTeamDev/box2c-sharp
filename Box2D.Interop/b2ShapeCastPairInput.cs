@@ -6,11 +6,14 @@ public partial struct b2ShapeCastPairInput
 
     public b2DistanceProxy proxyB;
 
-    public b2Transform transformA;
+    [NativeTypeName("b2Transform")]
+    public Transform transformA;
 
-    public b2Transform transformB;
+    [NativeTypeName("b2Transform")]
+    public Transform transformB;
 
-    public b2Vec2 translationB;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 translationB;
 
     public float maxFraction;
 }

@@ -5,7 +5,8 @@ namespace Box2D.Interop;
 
 public unsafe partial struct b2TreeNode
 {
-    public b2AABB aabb;
+    [NativeTypeName("b2AABB")]
+    public AABB aabb;
 
     [NativeTypeName("uint32_t")]
     public uint categoryBits;

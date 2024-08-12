@@ -2,7 +2,8 @@ namespace Box2D.Interop;
 
 public unsafe partial struct b2BodyMoveEvent
 {
-    public b2Transform transform;
+    [NativeTypeName("b2Transform")]
+    public Transform transform;
 
     public b2BodyId bodyId;
 

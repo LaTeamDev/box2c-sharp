@@ -4,9 +4,11 @@ public partial struct b2RayResult
 {
     public b2ShapeId shapeId;
 
-    public b2Vec2 point;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 point;
 
-    public b2Vec2 normal;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 normal;
 
     public float fraction;
 

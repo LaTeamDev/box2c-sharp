@@ -5,7 +5,7 @@ public unsafe partial struct b2ChainDef
     public void* userData;
 
     [NativeTypeName("const b2Vec2 *")]
-    public b2Vec2* points;
+    public System.Numerics.Vector2* points;
 
     [NativeTypeName("int32_t")]
     public int count;

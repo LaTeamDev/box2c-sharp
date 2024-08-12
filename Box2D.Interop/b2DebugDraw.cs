@@ -34,7 +34,8 @@ public unsafe partial struct b2DebugDraw
     [NativeTypeName("void (*)(b2Vec2, const char *, void *)")]
     public IntPtr DrawString;
 
-    public b2AABB drawingBounds;
+    [NativeTypeName("b2AABB")]
+    public AABB drawingBounds;
 
     [NativeTypeName("_Bool")]
     public bool useDrawingBounds;

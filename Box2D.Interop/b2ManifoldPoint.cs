@@ -2,11 +2,14 @@ namespace Box2D.Interop;
 
 public partial struct b2ManifoldPoint
 {
-    public b2Vec2 point;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 point;
 
-    public b2Vec2 anchorA;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 anchorA;
 
-    public b2Vec2 anchorB;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 anchorB;
 
     public float separation;
 

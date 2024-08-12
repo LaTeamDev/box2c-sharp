@@ -2,11 +2,14 @@ namespace Box2D.Interop;
 
 public partial struct b2SimplexVertex
 {
-    public b2Vec2 wA;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 wA;
 
-    public b2Vec2 wB;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 wB;
 
-    public b2Vec2 w;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 w;
 
     public float a;
 

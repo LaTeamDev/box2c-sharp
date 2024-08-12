@@ -2,9 +2,11 @@ namespace Box2D.Interop;
 
 public partial struct b2CastOutput
 {
-    public b2Vec2 normal;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 normal;
 
-    public b2Vec2 point;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 point;
 
     public float fraction;
 

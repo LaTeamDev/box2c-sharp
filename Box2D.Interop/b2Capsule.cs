@@ -2,9 +2,11 @@ namespace Box2D.Interop;
 
 public partial struct b2Capsule
 {
-    public b2Vec2 center1;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 center1;
 
-    public b2Vec2 center2;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 center2;
 
     public float radius;
 }

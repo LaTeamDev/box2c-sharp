@@ -4,7 +4,8 @@ namespace Box2D.Interop;
 
 public unsafe partial struct b2WorldDef
 {
-    public b2Vec2 gravity;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 gravity;
 
     public float restitutionThreshold;
 

@@ -10,7 +10,8 @@ public partial struct b2Polygon
     [NativeTypeName("b2Vec2[8]")]
     public _normals_e__FixedBuffer normals;
 
-    public b2Vec2 centroid;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 centroid;
 
     public float radius;
 
@@ -19,21 +20,21 @@ public partial struct b2Polygon
 
     public partial struct _vertices_e__FixedBuffer
     {
-        public b2Vec2 e0;
-        public b2Vec2 e1;
-        public b2Vec2 e2;
-        public b2Vec2 e3;
-        public b2Vec2 e4;
-        public b2Vec2 e5;
-        public b2Vec2 e6;
-        public b2Vec2 e7;
+        public System.Numerics.Vector2 e0;
+        public System.Numerics.Vector2 e1;
+        public System.Numerics.Vector2 e2;
+        public System.Numerics.Vector2 e3;
+        public System.Numerics.Vector2 e4;
+        public System.Numerics.Vector2 e5;
+        public System.Numerics.Vector2 e6;
+        public System.Numerics.Vector2 e7;
 
-        public unsafe ref b2Vec2 this[int index]
+        public unsafe ref System.Numerics.Vector2 this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                fixed (b2Vec2* pThis = &e0)
+                fixed (System.Numerics.Vector2* pThis = &e0)
                 {
                     return ref pThis[index];
                 }
@@ -43,21 +44,21 @@ public partial struct b2Polygon
 
     public partial struct _normals_e__FixedBuffer
     {
-        public b2Vec2 e0;
-        public b2Vec2 e1;
-        public b2Vec2 e2;
-        public b2Vec2 e3;
-        public b2Vec2 e4;
-        public b2Vec2 e5;
-        public b2Vec2 e6;
-        public b2Vec2 e7;
+        public System.Numerics.Vector2 e0;
+        public System.Numerics.Vector2 e1;
+        public System.Numerics.Vector2 e2;
+        public System.Numerics.Vector2 e3;
+        public System.Numerics.Vector2 e4;
+        public System.Numerics.Vector2 e5;
+        public System.Numerics.Vector2 e6;
+        public System.Numerics.Vector2 e7;
 
-        public unsafe ref b2Vec2 this[int index]
+        public unsafe ref System.Numerics.Vector2 this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                fixed (b2Vec2* pThis = &e0)
+                fixed (System.Numerics.Vector2* pThis = &e0)
                 {
                     return ref pThis[index];
                 }

@@ -64,31 +64,31 @@ public static unsafe partial class B2
     public static extern b2ContactEvents World_GetContactEvents(b2WorldId worldId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_OverlapAABB", ExactSpelling = true)]
-    public static extern void World_OverlapAABB(b2WorldId worldId, b2AABB aabb, b2QueryFilter filter, [NativeTypeName("b2OverlapResultFcn *")] IntPtr fcn, void* context);
+    public static extern void World_OverlapAABB(b2WorldId worldId, [NativeTypeName("b2AABB")] AABB aabb, b2QueryFilter filter, [NativeTypeName("b2OverlapResultFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_OverlapCircle", ExactSpelling = true)]
-    public static extern void World_OverlapCircle(b2WorldId worldId, [NativeTypeName("const b2Circle *")] b2Circle* circle, b2Transform transform, b2QueryFilter filter, [NativeTypeName("b2OverlapResultFcn *")] IntPtr fcn, void* context);
+    public static extern void World_OverlapCircle(b2WorldId worldId, [NativeTypeName("const b2Circle *")] b2Circle* circle, [NativeTypeName("b2Transform")] Transform transform, b2QueryFilter filter, [NativeTypeName("b2OverlapResultFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_OverlapCapsule", ExactSpelling = true)]
-    public static extern void World_OverlapCapsule(b2WorldId worldId, [NativeTypeName("const b2Capsule *")] b2Capsule* capsule, b2Transform transform, b2QueryFilter filter, [NativeTypeName("b2OverlapResultFcn *")] IntPtr fcn, void* context);
+    public static extern void World_OverlapCapsule(b2WorldId worldId, [NativeTypeName("const b2Capsule *")] b2Capsule* capsule, [NativeTypeName("b2Transform")] Transform transform, b2QueryFilter filter, [NativeTypeName("b2OverlapResultFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_OverlapPolygon", ExactSpelling = true)]
-    public static extern void World_OverlapPolygon(b2WorldId worldId, [NativeTypeName("const b2Polygon *")] b2Polygon* polygon, b2Transform transform, b2QueryFilter filter, [NativeTypeName("b2OverlapResultFcn *")] IntPtr fcn, void* context);
+    public static extern void World_OverlapPolygon(b2WorldId worldId, [NativeTypeName("const b2Polygon *")] b2Polygon* polygon, [NativeTypeName("b2Transform")] Transform transform, b2QueryFilter filter, [NativeTypeName("b2OverlapResultFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_CastRay", ExactSpelling = true)]
-    public static extern void World_CastRay(b2WorldId worldId, b2Vec2 origin, b2Vec2 translation, b2QueryFilter filter, [NativeTypeName("b2CastResultFcn *")] IntPtr fcn, void* context);
+    public static extern void World_CastRay(b2WorldId worldId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 origin, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 translation, b2QueryFilter filter, [NativeTypeName("b2CastResultFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_CastRayClosest", ExactSpelling = true)]
-    public static extern b2RayResult World_CastRayClosest(b2WorldId worldId, b2Vec2 origin, b2Vec2 translation, b2QueryFilter filter);
+    public static extern b2RayResult World_CastRayClosest(b2WorldId worldId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 origin, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 translation, b2QueryFilter filter);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_CastCircle", ExactSpelling = true)]
-    public static extern void World_CastCircle(b2WorldId worldId, [NativeTypeName("const b2Circle *")] b2Circle* circle, b2Transform originTransform, b2Vec2 translation, b2QueryFilter filter, [NativeTypeName("b2CastResultFcn *")] IntPtr fcn, void* context);
+    public static extern void World_CastCircle(b2WorldId worldId, [NativeTypeName("const b2Circle *")] b2Circle* circle, [NativeTypeName("b2Transform")] Transform originTransform, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 translation, b2QueryFilter filter, [NativeTypeName("b2CastResultFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_CastCapsule", ExactSpelling = true)]
-    public static extern void World_CastCapsule(b2WorldId worldId, [NativeTypeName("const b2Capsule *")] b2Capsule* capsule, b2Transform originTransform, b2Vec2 translation, b2QueryFilter filter, [NativeTypeName("b2CastResultFcn *")] IntPtr fcn, void* context);
+    public static extern void World_CastCapsule(b2WorldId worldId, [NativeTypeName("const b2Capsule *")] b2Capsule* capsule, [NativeTypeName("b2Transform")] Transform originTransform, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 translation, b2QueryFilter filter, [NativeTypeName("b2CastResultFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_CastPolygon", ExactSpelling = true)]
-    public static extern void World_CastPolygon(b2WorldId worldId, [NativeTypeName("const b2Polygon *")] b2Polygon* polygon, b2Transform originTransform, b2Vec2 translation, b2QueryFilter filter, [NativeTypeName("b2CastResultFcn *")] IntPtr fcn, void* context);
+    public static extern void World_CastPolygon(b2WorldId worldId, [NativeTypeName("const b2Polygon *")] b2Polygon* polygon, [NativeTypeName("b2Transform")] Transform originTransform, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 translation, b2QueryFilter filter, [NativeTypeName("b2CastResultFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_EnableSleeping", ExactSpelling = true)]
     public static extern void World_EnableSleeping(b2WorldId worldId, [NativeTypeName("_Bool")] bool flag);
@@ -109,13 +109,14 @@ public static unsafe partial class B2
     public static extern void World_SetPreSolveCallback(b2WorldId worldId, [NativeTypeName("b2PreSolveFcn *")] IntPtr fcn, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_SetGravity", ExactSpelling = true)]
-    public static extern void World_SetGravity(b2WorldId worldId, b2Vec2 gravity);
+    public static extern void World_SetGravity(b2WorldId worldId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 gravity);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_GetGravity", ExactSpelling = true)]
-    public static extern b2Vec2 World_GetGravity(b2WorldId worldId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 World_GetGravity(b2WorldId worldId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_Explode", ExactSpelling = true)]
-    public static extern void World_Explode(b2WorldId worldId, b2Vec2 position, float radius, float impulse);
+    public static extern void World_Explode(b2WorldId worldId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 position, float radius, float impulse);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_SetContactTuning", ExactSpelling = true)]
     public static extern void World_SetContactTuning(b2WorldId worldId, float hertz, float dampingRatio, float pushVelocity);
@@ -155,55 +156,63 @@ public static unsafe partial class B2
     public static extern void* Body_GetUserData(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetPosition", ExactSpelling = true)]
-    public static extern b2Vec2 Body_GetPosition(b2BodyId bodyId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Body_GetPosition(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetRotation", ExactSpelling = true)]
-    public static extern b2Rot Body_GetRotation(b2BodyId bodyId);
+    [return: NativeTypeName("b2Rot")]
+    public static extern Rotation Body_GetRotation(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetTransform", ExactSpelling = true)]
-    public static extern b2Transform Body_GetTransform(b2BodyId bodyId);
+    [return: NativeTypeName("b2Transform")]
+    public static extern Transform Body_GetTransform(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_SetTransform", ExactSpelling = true)]
-    public static extern void Body_SetTransform(b2BodyId bodyId, b2Vec2 position, b2Rot rotation);
+    public static extern void Body_SetTransform(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 position, [NativeTypeName("b2Rot")] Rotation rotation);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetLocalPoint", ExactSpelling = true)]
-    public static extern b2Vec2 Body_GetLocalPoint(b2BodyId bodyId, b2Vec2 worldPoint);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Body_GetLocalPoint(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 worldPoint);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetWorldPoint", ExactSpelling = true)]
-    public static extern b2Vec2 Body_GetWorldPoint(b2BodyId bodyId, b2Vec2 localPoint);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Body_GetWorldPoint(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 localPoint);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetLocalVector", ExactSpelling = true)]
-    public static extern b2Vec2 Body_GetLocalVector(b2BodyId bodyId, b2Vec2 worldVector);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Body_GetLocalVector(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 worldVector);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetWorldVector", ExactSpelling = true)]
-    public static extern b2Vec2 Body_GetWorldVector(b2BodyId bodyId, b2Vec2 localVector);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Body_GetWorldVector(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 localVector);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetLinearVelocity", ExactSpelling = true)]
-    public static extern b2Vec2 Body_GetLinearVelocity(b2BodyId bodyId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Body_GetLinearVelocity(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetAngularVelocity", ExactSpelling = true)]
     public static extern float Body_GetAngularVelocity(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_SetLinearVelocity", ExactSpelling = true)]
-    public static extern void Body_SetLinearVelocity(b2BodyId bodyId, b2Vec2 linearVelocity);
+    public static extern void Body_SetLinearVelocity(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 linearVelocity);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_SetAngularVelocity", ExactSpelling = true)]
     public static extern void Body_SetAngularVelocity(b2BodyId bodyId, float angularVelocity);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_ApplyForce", ExactSpelling = true)]
-    public static extern void Body_ApplyForce(b2BodyId bodyId, b2Vec2 force, b2Vec2 point, [NativeTypeName("_Bool")] bool wake);
+    public static extern void Body_ApplyForce(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 force, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 point, [NativeTypeName("_Bool")] bool wake);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_ApplyForceToCenter", ExactSpelling = true)]
-    public static extern void Body_ApplyForceToCenter(b2BodyId bodyId, b2Vec2 force, [NativeTypeName("_Bool")] bool wake);
+    public static extern void Body_ApplyForceToCenter(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 force, [NativeTypeName("_Bool")] bool wake);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_ApplyTorque", ExactSpelling = true)]
     public static extern void Body_ApplyTorque(b2BodyId bodyId, float torque, [NativeTypeName("_Bool")] bool wake);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_ApplyLinearImpulse", ExactSpelling = true)]
-    public static extern void Body_ApplyLinearImpulse(b2BodyId bodyId, b2Vec2 impulse, b2Vec2 point, [NativeTypeName("_Bool")] bool wake);
+    public static extern void Body_ApplyLinearImpulse(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 impulse, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 point, [NativeTypeName("_Bool")] bool wake);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_ApplyLinearImpulseToCenter", ExactSpelling = true)]
-    public static extern void Body_ApplyLinearImpulseToCenter(b2BodyId bodyId, b2Vec2 impulse, [NativeTypeName("_Bool")] bool wake);
+    public static extern void Body_ApplyLinearImpulseToCenter(b2BodyId bodyId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 impulse, [NativeTypeName("_Bool")] bool wake);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_ApplyAngularImpulse", ExactSpelling = true)]
     public static extern void Body_ApplyAngularImpulse(b2BodyId bodyId, float impulse, [NativeTypeName("_Bool")] bool wake);
@@ -215,10 +224,12 @@ public static unsafe partial class B2
     public static extern float Body_GetInertiaTensor(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetLocalCenterOfMass", ExactSpelling = true)]
-    public static extern b2Vec2 Body_GetLocalCenterOfMass(b2BodyId bodyId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Body_GetLocalCenterOfMass(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_GetWorldCenterOfMass", ExactSpelling = true)]
-    public static extern b2Vec2 Body_GetWorldCenterOfMass(b2BodyId bodyId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Body_GetWorldCenterOfMass(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_SetMassData", ExactSpelling = true)]
     public static extern void Body_SetMassData(b2BodyId bodyId, b2MassData massData);
@@ -320,7 +331,8 @@ public static unsafe partial class B2
     public static extern int Body_GetContactData(b2BodyId bodyId, b2ContactData* contactData, int capacity);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_ComputeAABB", ExactSpelling = true)]
-    public static extern b2AABB Body_ComputeAABB(b2BodyId bodyId);
+    [return: NativeTypeName("b2AABB")]
+    public static extern AABB Body_ComputeAABB(b2BodyId bodyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CreateCircleShape", ExactSpelling = true)]
     public static extern b2ShapeId CreateCircleShape(b2BodyId bodyId, [NativeTypeName("const b2ShapeDef *")] b2ShapeDef* def, [NativeTypeName("const b2Circle *")] b2Circle* circle);
@@ -411,10 +423,10 @@ public static unsafe partial class B2
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_TestPoint", ExactSpelling = true)]
     [return: NativeTypeName("_Bool")]
-    public static extern bool Shape_TestPoint(b2ShapeId shapeId, b2Vec2 point);
+    public static extern bool Shape_TestPoint(b2ShapeId shapeId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 point);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_RayCast", ExactSpelling = true)]
-    public static extern b2CastOutput Shape_RayCast(b2ShapeId shapeId, b2Vec2 origin, b2Vec2 translation);
+    public static extern b2CastOutput Shape_RayCast(b2ShapeId shapeId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 origin, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 translation);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_GetCircle", ExactSpelling = true)]
     public static extern b2Circle Shape_GetCircle(b2ShapeId shapeId);
@@ -453,10 +465,12 @@ public static unsafe partial class B2
     public static extern int Shape_GetContactData(b2ShapeId shapeId, b2ContactData* contactData, int capacity);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_GetAABB", ExactSpelling = true)]
-    public static extern b2AABB Shape_GetAABB(b2ShapeId shapeId);
+    [return: NativeTypeName("b2AABB")]
+    public static extern AABB Shape_GetAABB(b2ShapeId shapeId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_GetClosestPoint", ExactSpelling = true)]
-    public static extern b2Vec2 Shape_GetClosestPoint(b2ShapeId shapeId, b2Vec2 target);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Shape_GetClosestPoint(b2ShapeId shapeId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 target);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CreateChain", ExactSpelling = true)]
     public static extern b2ChainId CreateChain(b2BodyId bodyId, [NativeTypeName("const b2ChainDef *")] b2ChainDef* def);
@@ -491,10 +505,12 @@ public static unsafe partial class B2
     public static extern b2BodyId Joint_GetBodyB(b2JointId jointId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Joint_GetLocalAnchorA", ExactSpelling = true)]
-    public static extern b2Vec2 Joint_GetLocalAnchorA(b2JointId jointId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Joint_GetLocalAnchorA(b2JointId jointId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Joint_GetLocalAnchorB", ExactSpelling = true)]
-    public static extern b2Vec2 Joint_GetLocalAnchorB(b2JointId jointId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Joint_GetLocalAnchorB(b2JointId jointId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Joint_SetCollideConnected", ExactSpelling = true)]
     public static extern void Joint_SetCollideConnected(b2JointId jointId, [NativeTypeName("_Bool")] bool shouldCollide);
@@ -513,7 +529,8 @@ public static unsafe partial class B2
     public static extern void Joint_WakeBodies(b2JointId jointId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Joint_GetConstraintForce", ExactSpelling = true)]
-    public static extern b2Vec2 Joint_GetConstraintForce(b2JointId jointId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 Joint_GetConstraintForce(b2JointId jointId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Joint_GetConstraintTorque", ExactSpelling = true)]
     public static extern float Joint_GetConstraintTorque(b2JointId jointId);
@@ -591,10 +608,11 @@ public static unsafe partial class B2
     public static extern b2JointId CreateMotorJoint(b2WorldId worldId, [NativeTypeName("const b2MotorJointDef *")] b2MotorJointDef* def);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MotorJoint_SetLinearOffset", ExactSpelling = true)]
-    public static extern void MotorJoint_SetLinearOffset(b2JointId jointId, b2Vec2 linearOffset);
+    public static extern void MotorJoint_SetLinearOffset(b2JointId jointId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 linearOffset);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MotorJoint_GetLinearOffset", ExactSpelling = true)]
-    public static extern b2Vec2 MotorJoint_GetLinearOffset(b2JointId jointId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 MotorJoint_GetLinearOffset(b2JointId jointId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MotorJoint_SetAngularOffset", ExactSpelling = true)]
     public static extern void MotorJoint_SetAngularOffset(b2JointId jointId, float angularOffset);
@@ -624,10 +642,11 @@ public static unsafe partial class B2
     public static extern b2JointId CreateMouseJoint(b2WorldId worldId, [NativeTypeName("const b2MouseJointDef *")] b2MouseJointDef* def);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MouseJoint_SetTarget", ExactSpelling = true)]
-    public static extern void MouseJoint_SetTarget(b2JointId jointId, b2Vec2 target);
+    public static extern void MouseJoint_SetTarget(b2JointId jointId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 target);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MouseJoint_GetTarget", ExactSpelling = true)]
-    public static extern b2Vec2 MouseJoint_GetTarget(b2JointId jointId);
+    [return: NativeTypeName("b2Vec2")]
+    public static extern System.Numerics.Vector2 MouseJoint_GetTarget(b2JointId jointId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MouseJoint_SetSpringHertz", ExactSpelling = true)]
     public static extern void MouseJoint_SetSpringHertz(b2JointId jointId, float hertz);
@@ -861,7 +880,7 @@ public static unsafe partial class B2
     public static extern b2Polygon MakePolygon([NativeTypeName("const b2Hull *")] b2Hull* hull, float radius);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeOffsetPolygon", ExactSpelling = true)]
-    public static extern b2Polygon MakeOffsetPolygon([NativeTypeName("const b2Hull *")] b2Hull* hull, float radius, b2Transform transform);
+    public static extern b2Polygon MakeOffsetPolygon([NativeTypeName("const b2Hull *")] b2Hull* hull, float radius, [NativeTypeName("b2Transform")] Transform transform);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeSquare", ExactSpelling = true)]
     public static extern b2Polygon MakeSquare(float h);
@@ -873,10 +892,10 @@ public static unsafe partial class B2
     public static extern b2Polygon MakeRoundedBox(float hx, float hy, float radius);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeOffsetBox", ExactSpelling = true)]
-    public static extern b2Polygon MakeOffsetBox(float hx, float hy, b2Vec2 center, float angle);
+    public static extern b2Polygon MakeOffsetBox(float hx, float hy, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 center, float angle);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2TransformPolygon", ExactSpelling = true)]
-    public static extern b2Polygon TransformPolygon(b2Transform transform, [NativeTypeName("const b2Polygon *")] b2Polygon* polygon);
+    public static extern b2Polygon TransformPolygon([NativeTypeName("b2Transform")] Transform transform, [NativeTypeName("const b2Polygon *")] b2Polygon* polygon);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputeCircleMass", ExactSpelling = true)]
     public static extern b2MassData ComputeCircleMass([NativeTypeName("const b2Circle *")] b2Circle* shape, float density);
@@ -888,28 +907,32 @@ public static unsafe partial class B2
     public static extern b2MassData ComputePolygonMass([NativeTypeName("const b2Polygon *")] b2Polygon* shape, float density);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputeCircleAABB", ExactSpelling = true)]
-    public static extern b2AABB ComputeCircleAABB([NativeTypeName("const b2Circle *")] b2Circle* shape, b2Transform transform);
+    [return: NativeTypeName("b2AABB")]
+    public static extern AABB ComputeCircleAABB([NativeTypeName("const b2Circle *")] b2Circle* shape, [NativeTypeName("b2Transform")] Transform transform);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputeCapsuleAABB", ExactSpelling = true)]
-    public static extern b2AABB ComputeCapsuleAABB([NativeTypeName("const b2Capsule *")] b2Capsule* shape, b2Transform transform);
+    [return: NativeTypeName("b2AABB")]
+    public static extern AABB ComputeCapsuleAABB([NativeTypeName("const b2Capsule *")] b2Capsule* shape, [NativeTypeName("b2Transform")] Transform transform);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputePolygonAABB", ExactSpelling = true)]
-    public static extern b2AABB ComputePolygonAABB([NativeTypeName("const b2Polygon *")] b2Polygon* shape, b2Transform transform);
+    [return: NativeTypeName("b2AABB")]
+    public static extern AABB ComputePolygonAABB([NativeTypeName("const b2Polygon *")] b2Polygon* shape, [NativeTypeName("b2Transform")] Transform transform);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputeSegmentAABB", ExactSpelling = true)]
-    public static extern b2AABB ComputeSegmentAABB([NativeTypeName("const b2Segment *")] b2Segment* shape, b2Transform transform);
+    [return: NativeTypeName("b2AABB")]
+    public static extern AABB ComputeSegmentAABB([NativeTypeName("const b2Segment *")] b2Segment* shape, [NativeTypeName("b2Transform")] Transform transform);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2PointInCircle", ExactSpelling = true)]
     [return: NativeTypeName("_Bool")]
-    public static extern bool PointInCircle(b2Vec2 point, [NativeTypeName("const b2Circle *")] b2Circle* shape);
+    public static extern bool PointInCircle([NativeTypeName("b2Vec2")] System.Numerics.Vector2 point, [NativeTypeName("const b2Circle *")] b2Circle* shape);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2PointInCapsule", ExactSpelling = true)]
     [return: NativeTypeName("_Bool")]
-    public static extern bool PointInCapsule(b2Vec2 point, [NativeTypeName("const b2Capsule *")] b2Capsule* shape);
+    public static extern bool PointInCapsule([NativeTypeName("b2Vec2")] System.Numerics.Vector2 point, [NativeTypeName("const b2Capsule *")] b2Capsule* shape);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2PointInPolygon", ExactSpelling = true)]
     [return: NativeTypeName("_Bool")]
-    public static extern bool PointInPolygon(b2Vec2 point, [NativeTypeName("const b2Polygon *")] b2Polygon* shape);
+    public static extern bool PointInPolygon([NativeTypeName("b2Vec2")] System.Numerics.Vector2 point, [NativeTypeName("const b2Polygon *")] b2Polygon* shape);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2RayCastCircle", ExactSpelling = true)]
     public static extern b2CastOutput RayCastCircle([NativeTypeName("const b2RayCastInput *")] b2RayCastInput* input, [NativeTypeName("const b2Circle *")] b2Circle* shape);
@@ -923,8 +946,8 @@ public static unsafe partial class B2
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2RayCastPolygon", ExactSpelling = true)]
     public static extern b2CastOutput RayCastPolygon([NativeTypeName("const b2RayCastInput *")] b2RayCastInput* input, [NativeTypeName("const b2Polygon *")] b2Polygon* shape);
 
-    [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2World_GetSensorEvents", ExactSpelling = true)]
-    public static extern b2CastOutput World_GetSensorEvents([NativeTypeName("const b2ShapeCastInput *")] b2ShapeCastInput* input, [NativeTypeName("const b2Circle *")] b2Circle* shape);
+    [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ShapeCastCircle", ExactSpelling = true)]
+    public static extern b2CastOutput ShapeCastCircle([NativeTypeName("const b2ShapeCastInput *")] b2ShapeCastInput* input, [NativeTypeName("const b2Circle *")] b2Circle* shape);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ShapeCastCapsule", ExactSpelling = true)]
     public static extern b2CastOutput ShapeCastCapsule([NativeTypeName("const b2ShapeCastInput *")] b2ShapeCastInput* input, [NativeTypeName("const b2Capsule *")] b2Capsule* shape);
@@ -936,14 +959,14 @@ public static unsafe partial class B2
     public static extern b2CastOutput ShapeCastPolygon([NativeTypeName("const b2ShapeCastInput *")] b2ShapeCastInput* input, [NativeTypeName("const b2Polygon *")] b2Polygon* shape);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputeHull", ExactSpelling = true)]
-    public static extern b2Hull ComputeHull([NativeTypeName("const b2Vec2 *")] b2Vec2* points, [NativeTypeName("int32_t")] int count);
+    public static extern b2Hull ComputeHull([NativeTypeName("const b2Vec2 *")] System.Numerics.Vector2* points, [NativeTypeName("int32_t")] int count);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ValidateHull", ExactSpelling = true)]
     [return: NativeTypeName("_Bool")]
     public static extern bool ValidateHull([NativeTypeName("const b2Hull *")] b2Hull* hull);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2SegmentDistance", ExactSpelling = true)]
-    public static extern b2SegmentDistanceResult SegmentDistance(b2Vec2 p1, b2Vec2 q1, b2Vec2 p2, b2Vec2 q2);
+    public static extern b2SegmentDistanceResult SegmentDistance([NativeTypeName("b2Vec2")] System.Numerics.Vector2 p1, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 q1, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 p2, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 q2);
 
     [NativeTypeName("const b2DistanceCache")]
     public static ref readonly b2DistanceCache b2_emptyDistanceCache
@@ -969,49 +992,50 @@ public static unsafe partial class B2
     public static extern b2CastOutput ShapeCast([NativeTypeName("const b2ShapeCastPairInput *")] b2ShapeCastPairInput* input);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeProxy", ExactSpelling = true)]
-    public static extern b2DistanceProxy MakeProxy([NativeTypeName("const b2Vec2 *")] b2Vec2* vertices, [NativeTypeName("int32_t")] int count, float radius);
+    public static extern b2DistanceProxy MakeProxy([NativeTypeName("const b2Vec2 *")] System.Numerics.Vector2* vertices, [NativeTypeName("int32_t")] int count, float radius);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2GetSweepTransform", ExactSpelling = true)]
-    public static extern b2Transform GetSweepTransform([NativeTypeName("const b2Sweep *")] b2Sweep* sweep, float time);
+    [return: NativeTypeName("b2Transform")]
+    public static extern Transform GetSweepTransform([NativeTypeName("const b2Sweep *")] b2Sweep* sweep, float time);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2TimeOfImpact", ExactSpelling = true)]
     public static extern b2TOIOutput TimeOfImpact([NativeTypeName("const b2TOIInput *")] b2TOIInput* input);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideCircles", ExactSpelling = true)]
-    public static extern b2Manifold CollideCircles([NativeTypeName("const b2Circle *")] b2Circle* circleA, b2Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, b2Transform xfB);
+    public static extern b2Manifold CollideCircles([NativeTypeName("const b2Circle *")] b2Circle* circleA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideCapsuleAndCircle", ExactSpelling = true)]
-    public static extern b2Manifold CollideCapsuleAndCircle([NativeTypeName("const b2Capsule *")] b2Capsule* capsuleA, b2Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, b2Transform xfB);
+    public static extern b2Manifold CollideCapsuleAndCircle([NativeTypeName("const b2Capsule *")] b2Capsule* capsuleA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideSegmentAndCircle", ExactSpelling = true)]
-    public static extern b2Manifold CollideSegmentAndCircle([NativeTypeName("const b2Segment *")] b2Segment* segmentA, b2Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, b2Transform xfB);
+    public static extern b2Manifold CollideSegmentAndCircle([NativeTypeName("const b2Segment *")] b2Segment* segmentA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollidePolygonAndCircle", ExactSpelling = true)]
-    public static extern b2Manifold CollidePolygonAndCircle([NativeTypeName("const b2Polygon *")] b2Polygon* polygonA, b2Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, b2Transform xfB);
+    public static extern b2Manifold CollidePolygonAndCircle([NativeTypeName("const b2Polygon *")] b2Polygon* polygonA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideCapsules", ExactSpelling = true)]
-    public static extern b2Manifold CollideCapsules([NativeTypeName("const b2Capsule *")] b2Capsule* capsuleA, b2Transform bodyId, [NativeTypeName("const b2Capsule *")] b2Capsule* capsuleB, b2Transform xfB);
+    public static extern b2Manifold CollideCapsules([NativeTypeName("const b2Capsule *")] b2Capsule* capsuleA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Capsule *")] b2Capsule* capsuleB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideSegmentAndCapsule", ExactSpelling = true)]
-    public static extern b2Manifold CollideSegmentAndCapsule([NativeTypeName("const b2Segment *")] b2Segment* segmentA, b2Transform xfA, [NativeTypeName("const b2Capsule *")] b2Capsule* capsuleB, b2Transform xfB);
+    public static extern b2Manifold CollideSegmentAndCapsule([NativeTypeName("const b2Segment *")] b2Segment* segmentA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Capsule *")] b2Capsule* capsuleB, [NativeTypeName("b2Transform")] Transform xfB);
 
-    [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Body_SetAwake", ExactSpelling = true)]
-    public static extern b2Manifold Body_SetAwake([NativeTypeName("const b2Polygon *")] b2Polygon* polygonA, b2Transform xfA, [NativeTypeName("const b2Capsule *")] b2Capsule* capsuleB, b2Transform xfB);
+    [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollidePolygonAndCapsule", ExactSpelling = true)]
+    public static extern b2Manifold CollidePolygonAndCapsule([NativeTypeName("const b2Polygon *")] b2Polygon* polygonA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Capsule *")] b2Capsule* capsuleB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollidePolygons", ExactSpelling = true)]
-    public static extern b2Manifold CollidePolygons([NativeTypeName("const b2Polygon *")] b2Polygon* polygonA, b2Transform xfA, [NativeTypeName("const b2Polygon *")] b2Polygon* polygonB, b2Transform xfB);
+    public static extern b2Manifold CollidePolygons([NativeTypeName("const b2Polygon *")] b2Polygon* polygonA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Polygon *")] b2Polygon* polygonB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideSegmentAndPolygon", ExactSpelling = true)]
-    public static extern b2Manifold CollideSegmentAndPolygon([NativeTypeName("const b2Segment *")] b2Segment* segmentA, b2Transform xfA, [NativeTypeName("const b2Polygon *")] b2Polygon* polygonB, b2Transform xfB);
+    public static extern b2Manifold CollideSegmentAndPolygon([NativeTypeName("const b2Segment *")] b2Segment* segmentA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Polygon *")] b2Polygon* polygonB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideSmoothSegmentAndCircle", ExactSpelling = true)]
-    public static extern b2Manifold CollideSmoothSegmentAndCircle([NativeTypeName("const b2SmoothSegment *")] b2SmoothSegment* smoothSegmentA, b2Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, b2Transform xfB);
+    public static extern b2Manifold CollideSmoothSegmentAndCircle([NativeTypeName("const b2SmoothSegment *")] b2SmoothSegment* smoothSegmentA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Circle *")] b2Circle* circleB, [NativeTypeName("b2Transform")] Transform xfB);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideSmoothSegmentAndCapsule", ExactSpelling = true)]
-    public static extern b2Manifold CollideSmoothSegmentAndCapsule([NativeTypeName("const b2SmoothSegment *")] b2SmoothSegment* smoothSegmentA, b2Transform xfA, [NativeTypeName("const b2Capsule *")] b2Capsule* capsuleB, b2Transform xfB, b2DistanceCache* cache);
+    public static extern b2Manifold CollideSmoothSegmentAndCapsule([NativeTypeName("const b2SmoothSegment *")] b2SmoothSegment* smoothSegmentA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Capsule *")] b2Capsule* capsuleB, [NativeTypeName("b2Transform")] Transform xfB, b2DistanceCache* cache);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CollideSmoothSegmentAndPolygon", ExactSpelling = true)]
-    public static extern b2Manifold CollideSmoothSegmentAndPolygon([NativeTypeName("const b2SmoothSegment *")] b2SmoothSegment* smoothSegmentA, b2Transform xfA, [NativeTypeName("const b2Polygon *")] b2Polygon* polygonB, b2Transform xfB, b2DistanceCache* cache);
+    public static extern b2Manifold CollideSmoothSegmentAndPolygon([NativeTypeName("const b2SmoothSegment *")] b2SmoothSegment* smoothSegmentA, [NativeTypeName("b2Transform")] Transform xfA, [NativeTypeName("const b2Polygon *")] b2Polygon* polygonB, [NativeTypeName("b2Transform")] Transform xfB, b2DistanceCache* cache);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_Create", ExactSpelling = true)]
     public static extern b2DynamicTree DynamicTree_Create();
@@ -1021,19 +1045,19 @@ public static unsafe partial class B2
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_CreateProxy", ExactSpelling = true)]
     [return: NativeTypeName("int32_t")]
-    public static extern int DynamicTree_CreateProxy(b2DynamicTree* tree, b2AABB aabb, [NativeTypeName("uint32_t")] uint categoryBits, [NativeTypeName("int32_t")] int userData);
+    public static extern int DynamicTree_CreateProxy(b2DynamicTree* tree, [NativeTypeName("b2AABB")] AABB aabb, [NativeTypeName("uint32_t")] uint categoryBits, [NativeTypeName("int32_t")] int userData);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_DestroyProxy", ExactSpelling = true)]
     public static extern void DynamicTree_DestroyProxy(b2DynamicTree* tree, [NativeTypeName("int32_t")] int proxyId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_MoveProxy", ExactSpelling = true)]
-    public static extern void DynamicTree_MoveProxy(b2DynamicTree* tree, [NativeTypeName("int32_t")] int polygon, b2AABB aabb);
+    public static extern void DynamicTree_MoveProxy(b2DynamicTree* tree, [NativeTypeName("int32_t")] int proxyId, [NativeTypeName("b2AABB")] AABB aabb);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_EnlargeProxy", ExactSpelling = true)]
-    public static extern void DynamicTree_EnlargeProxy(b2DynamicTree* tree, [NativeTypeName("int32_t")] int proxyId, b2AABB aabb);
+    public static extern void DynamicTree_EnlargeProxy(b2DynamicTree* tree, [NativeTypeName("int32_t")] int proxyId, [NativeTypeName("b2AABB")] AABB aabb);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_Query", ExactSpelling = true)]
-    public static extern void DynamicTree_Query([NativeTypeName("const b2DynamicTree *")] b2DynamicTree* tree, b2AABB aabb, [NativeTypeName("uint32_t")] uint maskBits, [NativeTypeName("b2TreeQueryCallbackFcn *")] IntPtr callback, void* context);
+    public static extern void DynamicTree_Query([NativeTypeName("const b2DynamicTree *")] b2DynamicTree* tree, [NativeTypeName("b2AABB")] AABB aabb, [NativeTypeName("uint32_t")] uint maskBits, [NativeTypeName("b2TreeQueryCallbackFcn *")] IntPtr callback, void* context);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_RayCast", ExactSpelling = true)]
     public static extern void DynamicTree_RayCast([NativeTypeName("const b2DynamicTree *")] b2DynamicTree* tree, [NativeTypeName("const b2RayCastInput *")] b2RayCastInput* input, [NativeTypeName("uint32_t")] uint maskBits, [NativeTypeName("b2TreeRayCastCallbackFcn *")] IntPtr callback, void* context);
@@ -1063,7 +1087,7 @@ public static unsafe partial class B2
     public static extern int DynamicTree_Rebuild(b2DynamicTree* tree, [NativeTypeName("_Bool")] bool fullBuild);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_ShiftOrigin", ExactSpelling = true)]
-    public static extern void DynamicTree_ShiftOrigin(b2DynamicTree* tree, b2Vec2 newOrigin);
+    public static extern void DynamicTree_ShiftOrigin(b2DynamicTree* tree, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 newOrigin);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2DynamicTree_GetByteCount", ExactSpelling = true)]
     public static extern int DynamicTree_GetByteCount([NativeTypeName("const b2DynamicTree *")] b2DynamicTree* tree);
@@ -1074,7 +1098,8 @@ public static unsafe partial class B2
         return tree->nodes[proxyId].userData;
     }
 
-    public static b2AABB DynamicTree_GetAABB([NativeTypeName("const b2DynamicTree *")] b2DynamicTree* tree, [NativeTypeName("int32_t")] int proxyId)
+    [return: NativeTypeName("b2AABB")]
+    public static AABB DynamicTree_GetAABB([NativeTypeName("const b2DynamicTree *")] b2DynamicTree* tree, [NativeTypeName("int32_t")] int proxyId)
     {
         return tree->nodes[proxyId].aabb;
     }

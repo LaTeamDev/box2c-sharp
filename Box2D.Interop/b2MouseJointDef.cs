@@ -6,7 +6,8 @@ public unsafe partial struct b2MouseJointDef
 
     public b2BodyId bodyIdB;
 
-    public b2Vec2 target;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 target;
 
     public float hertz;
 

@@ -6,9 +6,11 @@ public partial struct b2DistanceInput
 
     public b2DistanceProxy proxyB;
 
-    public b2Transform transformA;
+    [NativeTypeName("b2Transform")]
+    public Transform transformA;
 
-    public b2Transform transformB;
+    [NativeTypeName("b2Transform")]
+    public Transform transformB;
 
     [NativeTypeName("_Bool")]
     public bool useRadii;

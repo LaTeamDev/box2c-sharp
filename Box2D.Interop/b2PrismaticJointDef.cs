@@ -6,11 +6,14 @@ public unsafe partial struct b2PrismaticJointDef
 
     public b2BodyId bodyIdB;
 
-    public b2Vec2 localAnchorA;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 localAnchorA;
 
-    public b2Vec2 localAnchorB;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 localAnchorB;
 
-    public b2Vec2 localAxisA;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 localAxisA;
 
     public float referenceAngle;
 

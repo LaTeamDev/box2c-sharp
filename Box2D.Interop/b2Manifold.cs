@@ -7,7 +7,8 @@ public partial struct b2Manifold
     [NativeTypeName("b2ManifoldPoint[2]")]
     public _points_e__FixedBuffer points;
 
-    public b2Vec2 normal;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 normal;
 
     [NativeTypeName("int32_t")]
     public int pointCount;

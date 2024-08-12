@@ -2,7 +2,9 @@ namespace Box2D.Interop;
 
 public partial struct b2Segment
 {
-    public b2Vec2 point1;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 point1;
 
-    public b2Vec2 point2;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 point2;
 }

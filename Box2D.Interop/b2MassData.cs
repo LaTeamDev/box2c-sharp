@@ -4,7 +4,8 @@ public partial struct b2MassData
 {
     public float mass;
 
-    public b2Vec2 center;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 center;
 
     public float rotationalInertia;
 }

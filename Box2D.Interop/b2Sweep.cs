@@ -2,13 +2,18 @@ namespace Box2D.Interop;
 
 public partial struct b2Sweep
 {
-    public b2Vec2 localCenter;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 localCenter;
 
-    public b2Vec2 c1;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 c1;
 
-    public b2Vec2 c2;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 c2;
 
-    public b2Rot q1;
+    [NativeTypeName("b2Rot")]
+    public Rotation q1;
 
-    public b2Rot q2;
+    [NativeTypeName("b2Rot")]
+    public Rotation q2;
 }

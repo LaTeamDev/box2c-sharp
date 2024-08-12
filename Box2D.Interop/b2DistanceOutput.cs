@@ -2,9 +2,11 @@ namespace Box2D.Interop;
 
 public partial struct b2DistanceOutput
 {
-    public b2Vec2 pointA;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 pointA;
 
-    public b2Vec2 pointB;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 pointB;
 
     public float distance;
 

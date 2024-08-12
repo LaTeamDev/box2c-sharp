@@ -4,11 +4,14 @@ public unsafe partial struct b2BodyDef
 {
     public b2BodyType type;
 
-    public b2Vec2 position;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 position;
 
-    public b2Rot rotation;
+    [NativeTypeName("b2Rot")]
+    public Rotation rotation;
 
-    public b2Vec2 linearVelocity;
+    [NativeTypeName("b2Vec2")]
+    public System.Numerics.Vector2 linearVelocity;
 
     public float angularVelocity;
 
