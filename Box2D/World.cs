@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Box2D.Interop;
 
-namespace Box2D; 
+namespace Box2D;
 
 public class World : IDisposable {
     private b2WorldId _id;
@@ -13,8 +13,8 @@ public class World : IDisposable {
         _id = B2.CreateWorld(worldDef.Pointer);
     }
 
-    public World() : this(new WorldDef()) {}
-    
+    public World() : this(new WorldDef()) { }
+
     public void Dispose() {
         B2.DestroyWorld(_id);
     }
@@ -82,56 +82,67 @@ public class World : IDisposable {
 
     public b2ContactEvents GetContactEvents() =>
         B2.World_GetContactEvents(_id);
+    // other is ok irc
 
-    public delegate bool OverlapResultFcn<T>(Body body, ref T context);
+    public delegate bool OverlapResultFcn<T>(Shape shape, ref T context);
 
-    private unsafe static b2OverlapResultFcn _overlapResultFcn = (id, context) => {
-        //Unsafe.AsRef(context);
-        return false;
-    };
-    
-    private class OverlapResultFunctionHelper<T> {
-        public T Context;
-        public OverlapResultFcn<T> Fcn;
-        public OverlapResultFunctionHelper(T ctx, OverlapResultFcn<T> fcn) {
-            Context = ctx;
-            Fcn = fcn;
-        }
-    }
+    private unsafe static b2OverlapResultFcn _overlapResultBuilder<T>(
+        OverlapResultFcn<T> fcn) => (shapeId, context) => fcn(new Shape(shapeId), ref Unsafe.AsRef<T>(context));
 
-    public unsafe void OverlapAABB<T>(AABB aabb, b2QueryFilter filter, b2OverlapResultFcn fcn, T context) =>
-        B2.World_OverlapAABB(_id, aabb, filter, Marshal.GetFunctionPointerForDelegate(fcn), Unsafe.AsPointer(ref context));
+    public unsafe void OverlapAABB<T>(AABB aabb, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) => 
+        B2.World_OverlapAABB(_id, aabb, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void OverlapCircle(ref Circle circle, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, ref object? context) =>
-        B2.World_OverlapCircle(_id, ref circle, transform, filter, fcn, Unsafe.AsPointer(ref context));
+    public unsafe void OverlapCircle<T>(ref Circle circle, Transform transform, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
+        B2.World_OverlapCircle(_id, ref circle, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void OverlapCapsule(ref Capsule capsule, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, ref object? context) =>
-        B2.World_OverlapCapsule(_id, ref capsule, transform, filter, fcn, Unsafe.AsPointer(ref context));
+    public unsafe void OverlapCapsule<T>(ref Capsule capsule, Transform transform, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
+        B2.World_OverlapCapsule(_id, ref capsule, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void OverlapPolygon(ref Polygon polygon, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, ref object? context) =>
-        B2.World_OverlapPolygon(_id, ref polygon, transform, filter, fcn, Unsafe.AsPointer(ref context));
+    public unsafe void OverlapPolygon<T>(ref Polygon polygon, Transform transform, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
+        B2.World_OverlapPolygon(_id, ref polygon, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
 
-    public unsafe void CastRay(Vector2 origin, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn,
-        ref object? context) =>
-        B2.World_CastRay(_id, origin, translation, filter, fcn, Unsafe.AsPointer(ref context));
+    public delegate float CastResultFcn<T>(Shape shape, Vector2 point, Vector2 normal, float fraction, ref T context);
+    private unsafe static b2CastResultFcn _castResultBuilder<T>(
+        CastResultFcn<T> fcn) => (shapeId, point, normal, fraction, context) => fcn(new Shape(shapeId), point, normal, fraction, ref Unsafe.AsRef<T>(context));
+    
+    public unsafe void CastRay<T>(Vector2 origin, Vector2 translation, b2QueryFilter filter, CastResultFcn<T> fcn,
+        ref T context) =>
+        B2.World_CastRay(_id, origin, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
 
     public unsafe void CastRay(Vector2 origin, Vector2 translation, b2QueryFilter filter) =>
         B2.World_CastRayClosest(_id, origin, translation, filter);
     
-    public unsafe void CastCircle(ref Circle circle, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, ref object? context) =>
-        B2.World_CastCircle(_id, ref circle, originTransform, translation, filter, fcn, Unsafe.AsPointer(ref context));
+    public unsafe void CastCircle<T>(ref Circle circle, Transform originTransform, Vector2 translation, b2QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
+        B2.World_CastCircle(_id, ref circle, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void CastCapsule(ref Capsule capsule, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, ref object? context) =>
-        B2.World_CastCapsule(_id, ref capsule, originTransform, translation, filter, fcn, Unsafe.AsPointer(ref context));
+    public unsafe void CastCapsule<T>(ref Capsule capsule, Transform originTransform, Vector2 translation, b2QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
+        B2.World_CastCapsule(_id, ref capsule, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void CastPolygon(ref Polygon polygon, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, ref object? context) =>
-        B2.World_CastPolygon(_id, ref polygon, originTransform, translation, filter, fcn, Unsafe.AsPointer(ref context));
-    
-    public unsafe void SetCustomFilterCallback(b2CustomFilterFcn callback, ref object? context) =>
-        B2.World_SetCustomFilterCallback(_id, Marshal.GetFunctionPointerForDelegate(callback), Unsafe.AsPointer(ref context));
-    
-    public unsafe void SetPreSolveCallback(b2CustomFilterFcn callback, ref object? context) =>
-        B2.World_SetPreSolveCallback(_id, Marshal.GetFunctionPointerForDelegate(callback), Unsafe.AsPointer(ref context));
+    public unsafe void CastPolygon<T>(ref Polygon polygon, Transform originTransform, Vector2 translation, b2QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
+        B2.World_CastPolygon(_id, ref polygon, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
+
+    public delegate bool CustomFilterFcn<T>(Shape shapeA, Shape shapeB, ref T context);
+    private unsafe static b2CustomFilterFcn _customFilterBuilder<T>(
+        CustomFilterFcn<T> fcn) => (shapeIdA, shapeIdB, context) => fcn(new Shape(shapeIdA), new Shape(shapeIdB), ref Unsafe.AsRef<T>(context));
+
+    private b2CustomFilterFcn _customFilterCallback;
+
+    public unsafe void SetCustomFilterCallback<T>(CustomFilterFcn<T> callback, ref T context) {
+        _customFilterCallback = _customFilterBuilder(callback);
+        B2.World_SetCustomFilterCallback(_id, _customFilterCallback, Unsafe.AsPointer(ref context));
+    }
+
+    // im not sure about b2Manifold and whatever magic stuff behind Unsafe.AsRef
+    public delegate bool PreSolveFcn<T>(Shape shapeA, Shape shapeB, ref b2Manifold manifold, ref T context);
+    private unsafe static b2PreSolveFcn _preSolveBuilder<T>(
+        PreSolveFcn<T> fcn) => (shapeIdA, shapeIdB, manifold, context) => fcn(new Shape(shapeIdA), new Shape(shapeIdB), ref Unsafe.AsRef<b2Manifold>(manifold), ref Unsafe.AsRef<T>(context));
+
+    private b2PreSolveFcn _preSolveCallback;
+
+    public unsafe void SetPreSolveCallback<T>(PreSolveFcn<T> callback, ref T context) {
+        _preSolveCallback = _preSolveBuilder(callback);
+        B2.World_SetPreSolveCallback(_id, _preSolveCallback, Unsafe.AsPointer(ref context));
+    }
 
     public b2Profile Profile => B2.World_GetProfile(_id);
 

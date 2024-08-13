@@ -1,3 +1,5 @@
+using ZeroElectric.Vinculum;
+
 namespace Box2D; 
 
 public abstract class Window {
@@ -13,7 +15,8 @@ public abstract class Window {
     public abstract void Update();
 
     public void Run() {
-
+        SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);
+        SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
         InitWindow(Width, Height, Title);
         if (TargetFps is not null) SetTargetFPS(TargetFps??0);
         Load();

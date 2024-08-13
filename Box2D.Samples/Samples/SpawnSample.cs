@@ -48,10 +48,7 @@ public class SpawnSample : Sample {
         public Body? Body;
     }
 
-    private unsafe b2OverlapResultFcn QueryCallback = (shapeId, context) => {
-        var queryContext = Unsafe.AsRef<QueryContext>(context);
-
-        var shape = new Shape(shapeId);
+    private unsafe World.OverlapResultFcn<QueryContext> QueryCallback = (Shape shape, ref QueryContext context) => {
         var body = shape.Body;
         var bodyType = body.Type;
         if (bodyType != BodyType.Dynamic) {
@@ -59,10 +56,10 @@ public class SpawnSample : Sample {
             return true;
         }
 
-        var overlap = shape.TestPoint(queryContext.Point);
+        var overlap = shape.TestPoint(context.Point);
         if (!overlap) return true;
         // found shape
-        queryContext.Body = body;
+        context.Body = body;
         return false;
     };
 
@@ -81,7 +78,7 @@ public class SpawnSample : Sample {
 
         // Query the world for overlapping shapes.
         var queryContext = new QueryContext {Point = p, Body = null };
-        _world.OverlapAABB(box, new b2QueryFilter(), QueryCallback, queryContext);
+        _world.OverlapAABB(box, new b2QueryFilter(), QueryCallback, ref queryContext);
 
         if (queryContext.Body is null) return;
         

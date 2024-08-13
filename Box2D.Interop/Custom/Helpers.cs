@@ -55,6 +55,11 @@ public unsafe partial class B2 {
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2GetLengthUnitsPerMeter", ExactSpelling = true)]
     public static extern float GetLengthUnitsPerMeter();
+    
+    public static void World_OverlapAABB(b2WorldId worldId, AABB aabb,
+        b2QueryFilter filter, b2OverlapResultFcn fcn, void* context) =>
+        World_OverlapAABB(worldId, aabb, filter,
+            Marshal.GetFunctionPointerForDelegate(fcn), context);
 
     public static void World_OverlapCircle(b2WorldId worldId, ref Circle circle, Transform transform,
         b2QueryFilter filter, b2OverlapResultFcn fcn, void* context) =>
@@ -112,5 +117,10 @@ public unsafe partial class B2 {
 
     public static b2JointId CreateWheelJoint(b2WorldId worldId, ref b2WheelJointDef jointDef) =>
         CreateWheelJoint(worldId, (b2WheelJointDef*) Unsafe.AsPointer(ref jointDef));
+
+    public static void World_SetCustomFilterCallback(b2WorldId worldId, b2CustomFilterFcn fcn, void* context) =>
+        World_SetCustomFilterCallback(worldId, Marshal.GetFunctionPointerForDelegate(fcn), context);
     
+    public static void World_SetPreSolveCallback(b2WorldId worldId, b2PreSolveFcn fcn, void* context) =>
+        World_SetPreSolveCallback(worldId, Marshal.GetFunctionPointerForDelegate(fcn), context);
 }
