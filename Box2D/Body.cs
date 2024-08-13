@@ -6,7 +6,7 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class Body : IDisposable {
-    private readonly b2BodyId _id;
+    internal readonly b2BodyId _id;
     public Body(b2BodyId id) {
         _id = id;
     }

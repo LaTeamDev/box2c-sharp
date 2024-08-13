@@ -11,6 +11,7 @@ public class SpawnSample : Sample {
     private World _world;
     private Body _body;
     private Camera2D _camera2D = new();
+    private MouseJoint? _mouseJoint;
     public override void Load() {
         _world = new World(new WorldDef {
             Gravity = Vector2.UnitY*9.31f*World.LengthUnitsPerMeter
@@ -42,13 +43,100 @@ public class SpawnSample : Sample {
 
     private void SpawnBody() => SpawnBody(Vector2.Zero);
 
+    private class QueryContext {
+        public Vector2 Point;
+        public Body? Body;
+    }
+
+    private unsafe b2OverlapResultFcn QueryCallback = (shapeId, context) => {
+        var queryContext = Unsafe.AsRef<QueryContext>(context);
+
+        var shape = new Shape(shapeId);
+        var body = shape.Body;
+        var bodyType = body.Type;
+        if (bodyType != BodyType.Dynamic) {
+            // continue query
+            return true;
+        }
+
+        var overlap = shape.TestPoint(queryContext.Point);
+        if (!overlap) return true;
+        // found shape
+        queryContext.Body = body;
+        return false;
+    };
+
+    private Body? _groundBodyId;
+
+    private void SpawnJoint(Vector2 p)
+    {
+        if (_mouseJoint is not null) return;
+        if (!IsMouseButtonDown(MouseButton.MOUSE_BUTTON_RIGHT)) return;
+        
+        // Make a small box.
+        AABB box;
+        var d = new Vector2( 0.001f, 0.001f );
+        box.LowerBound = p - d;
+        box.UpperBound = p + d;
+
+        // Query the world for overlapping shapes.
+        var queryContext = new QueryContext {Point = p, Body = null };
+        _world.OverlapAABB(box, new b2QueryFilter(), QueryCallback, queryContext);
+
+        if (queryContext.Body is null) return;
+        
+        var bodyDef = new BodyDef();
+        _groundBodyId = _world.CreateBody(bodyDef);
+
+        var mouseDef = new MouseJointDef();
+        mouseDef.BodyA = _groundBodyId;
+        mouseDef.BodyB = queryContext.Body;
+        mouseDef.Target = p;
+        mouseDef.Hertz = 5.0f;
+        mouseDef.DampingRatio = 0.7f;
+        mouseDef.MaxForce = 1000.0f * queryContext.Body.Mass * World.LengthUnitsPerMeter;
+        _mouseJoint = _world.CreateMouseJoint(mouseDef);
+        queryContext.Body.Awake = true;
+    }
+
+    private void RemoveJoint() {
+        if (_mouseJoint == null) return;
+        if (_mouseJoint.IsValid == false )
+        {
+            _mouseJoint = null;
+        }
+
+        if (IsMouseButtonDown(MouseButton.MOUSE_BUTTON_RIGHT)) return;
+        
+        _mouseJoint?.Dispose();
+        _mouseJoint = null;
+
+        _groundBodyId?.Dispose();
+        _groundBodyId = null;
+    }
+
+    private void MoveJoint(Vector2 p) {
+        if (_mouseJoint == null) return;
+        if (!_mouseJoint.IsValid) return;
+        _mouseJoint.Target = p;
+        _mouseJoint.BodyB.Awake = true;
+    }
+
+    private void UpdateJoint(Vector2 p) {
+        SpawnJoint(p);
+        MoveJoint(p);
+        RemoveJoint();
+    }
+
     public override void Update() {
         _world.Step(1/60f, 4);
         _camera2D.offset = new Vector2(GetRenderWidth() / 2f, GetRenderHeight() / 2f);
         _camera2D.zoom += GetMouseWheelMove()*0.1f;
+        var mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), _camera2D);
         if (IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT)) {
-            SpawnBody(GetScreenToWorld2D(GetMousePosition(), _camera2D));
+            SpawnBody(mouseWorldPos);
         }
+        UpdateJoint(mouseWorldPos);
     }
 
     public override unsafe void Draw() {

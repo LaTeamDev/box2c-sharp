@@ -3,60 +3,59 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class WorldDef {
-    internal b2WorldDef _b2WorldDef = B2.DefaultWorldDef();
+public sealed class WorldDef : Def<b2WorldDef> {
     public int WorkerCount {
-        get => _b2WorldDef.workerCount;
-        set => _b2WorldDef.workerCount = value;
+        get => _def.workerCount;
+        set => _def.workerCount = value;
     }
 
     public Vector2 Gravity {
-        get => _b2WorldDef.gravity;
-        set => _b2WorldDef.gravity = value;
+        get => _def.gravity;
+        set => _def.gravity = value;
     }
 
     public float ContactHertz {
-        get => _b2WorldDef.contactHertz;
-        set => _b2WorldDef.contactHertz = value;
+        get => _def.contactHertz;
+        set => _def.contactHertz = value;
     }
 
     public float JointHertz {
-        get => _b2WorldDef.jointHertz;
-        set => _b2WorldDef.jointHertz = value;
+        get => _def.jointHertz;
+        set => _def.jointHertz = value;
     }
 
     public float ContactDampingRatio {
-        get => _b2WorldDef.contactDampingRatio;
-        set => _b2WorldDef.contactDampingRatio = value;
+        get => _def.contactDampingRatio;
+        set => _def.contactDampingRatio = value;
     }
 
     public float RestitutionThreshold {
-        get => _b2WorldDef.restitutionThreshold;
-        set => _b2WorldDef.restitutionThreshold = value;
+        get => _def.restitutionThreshold;
+        set => _def.restitutionThreshold = value;
     }
 
     public float ContactPushoutVelocity {
-        get => _b2WorldDef.contactPushoutVelocity;
-        set => _b2WorldDef.contactPushoutVelocity = value;
+        get => _def.contactPushoutVelocity;
+        set => _def.contactPushoutVelocity = value;
     }
 
     public float HitEventThreshold {
-        get => _b2WorldDef.hitEventThreshold;
-        set => _b2WorldDef.hitEventThreshold = value;
+        get => _def.hitEventThreshold;
+        set => _def.hitEventThreshold = value;
     }
 
     public float JointDampingRatio {
-        get => _b2WorldDef.jointDampingRatio;
-        set => _b2WorldDef.jointDampingRatio = value;
+        get => _def.jointDampingRatio;
+        set => _def.jointDampingRatio = value;
     }
 
     public bool EnableContinous {
-        get => _b2WorldDef.enableContinous;
-        set => _b2WorldDef.enableContinous = value;
+        get => _def.enableContinous;
+        set => _def.enableContinous = value;
     }
 
     public bool EnableSleep {
-        get => _b2WorldDef.enableSleep;
-        set => _b2WorldDef.enableSleep = value;
+        get => _def.enableSleep;
+        set => _def.enableSleep = value;
     }
 }

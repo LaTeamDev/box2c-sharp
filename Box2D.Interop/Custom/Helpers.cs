@@ -91,4 +91,26 @@ public unsafe partial class B2 {
 
     public static b2ChainId CreateChain(b2BodyId bodyId, ref b2ChainDef chainDef) =>
         CreateChain(bodyId, (b2ChainDef*)Unsafe.AsPointer(ref chainDef));
+
+    public static b2JointId CreateDistanceJoint(b2WorldId worldId, ref b2DistanceJointDef distanceJointDef) =>
+        CreateDistanceJoint(worldId, (b2DistanceJointDef*) Unsafe.AsPointer(ref distanceJointDef));
+
+    public static b2JointId CreateMotorJoint(b2WorldId worldId, ref b2MotorJointDef jointDef) =>
+        CreateMotorJoint(worldId, (b2MotorJointDef*) Unsafe.AsPointer(ref jointDef));
+
+    public static b2JointId CreateMouseJoint(b2WorldId worldId, ref b2MouseJointDef jointDef) =>
+        CreateMouseJoint(worldId, (b2MouseJointDef*) Unsafe.AsPointer(ref jointDef));
+
+    public static b2JointId CreatePrismaticJoint(b2WorldId worldId, ref b2PrismaticJointDef jointDef) =>
+        CreatePrismaticJoint(worldId, (b2PrismaticJointDef*) Unsafe.AsPointer(ref jointDef));
+
+    public static b2JointId CreateRevoluteJoint(b2WorldId worldId, ref b2RevoluteJointDef jointDef) =>
+        CreateRevoluteJoint(worldId, (b2RevoluteJointDef*) Unsafe.AsPointer(ref jointDef));
+
+    public static b2JointId CreateWeldJoint(b2WorldId worldId, ref b2WeldJointDef jointDef) =>
+        CreateWeldJoint(worldId, (b2WeldJointDef*) Unsafe.AsPointer(ref jointDef));
+
+    public static b2JointId CreateWheelJoint(b2WorldId worldId, ref b2WheelJointDef jointDef) =>
+        CreateWheelJoint(worldId, (b2WheelJointDef*) Unsafe.AsPointer(ref jointDef));
+    
 }

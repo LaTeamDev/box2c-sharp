@@ -3,86 +3,84 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class BodyDef {
-    internal b2BodyDef _b2BodyDef = B2.DefaultBodyDef();
-    
+public sealed class BodyDef : Def<b2BodyDef> {
     public BodyType Type {
-        get => (BodyType)_b2BodyDef.type;
-        set => _b2BodyDef.type = (b2BodyType)value;
+        get => (BodyType)_def.type;
+        set => _def.type = (b2BodyType)value;
     }
 
     public Vector2 Position {
-        get => _b2BodyDef.position;
-        set => _b2BodyDef.position = value;
+        get => _def.position;
+        set => _def.position = value;
     }
 
     public Rotation Rotation {
-        get => _b2BodyDef.rotation;
-        set => _b2BodyDef.rotation = value;
+        get => _def.rotation;
+        set => _def.rotation = value;
     }
 
     public Vector2 LinearVelocity {
-        get => _b2BodyDef.position;
-        set => _b2BodyDef.position = value;
+        get => _def.position;
+        set => _def.position = value;
     }
 
     public float AngularVelocity {
-        get => _b2BodyDef.angularVelocity;
-        set => _b2BodyDef.angularVelocity = value;
+        get => _def.angularVelocity;
+        set => _def.angularVelocity = value;
     }
 
     public float LinearDamping {
-        get => _b2BodyDef.linearDamping;
-        set => _b2BodyDef.linearDamping = value;
+        get => _def.linearDamping;
+        set => _def.linearDamping = value;
     }
 
     public float AngularDamping {
-        get => _b2BodyDef.angularDamping;
-        set => _b2BodyDef.angularDamping = value;
+        get => _def.angularDamping;
+        set => _def.angularDamping = value;
     }
 
     public float GravityScale {
-        get => _b2BodyDef.gravityScale;
-        set => _b2BodyDef.gravityScale = value;
+        get => _def.gravityScale;
+        set => _def.gravityScale = value;
     }
 
     public float SleepThreshold {
-        get => _b2BodyDef.sleepThreshold;
-        set => _b2BodyDef.sleepThreshold = value;
+        get => _def.sleepThreshold;
+        set => _def.sleepThreshold = value;
     }
 
     public unsafe void* UserData {
-        get => _b2BodyDef.userData;
-        set => _b2BodyDef.userData = value;
+        get => _def.userData;
+        set => _def.userData = value;
     }
 
     public bool EnableSleep {
-        get => _b2BodyDef.enableSleep;
-        set => _b2BodyDef.enableSleep = value;
+        get => _def.enableSleep;
+        set => _def.enableSleep = value;
     }
 
     public bool IsAwake {
-        get => _b2BodyDef.isAwake;
-        set => _b2BodyDef.isAwake = value;
+        get => _def.isAwake;
+        set => _def.isAwake = value;
     }
 
     public bool FixedRotation {
-        get => _b2BodyDef.fixedRotation;
-        set => _b2BodyDef.fixedRotation = value;
+        get => _def.fixedRotation;
+        set => _def.fixedRotation = value;
     }
 
     public bool IsBullet {
-        get => _b2BodyDef.isBullet;
-        set => _b2BodyDef.isBullet = value;
+        get => _def.isBullet;
+        set => _def.isBullet = value;
     }
 
     public bool IsEnabled {
-        get => _b2BodyDef.isEnabled;
-        set => _b2BodyDef.isEnabled = value;
+        get => _def.isEnabled;
+        set => _def.isEnabled = value;
     }
 
     public bool AutomaticMass {
-        get => _b2BodyDef.automaticMass;
-        set => _b2BodyDef.automaticMass = value;
+        get => _def.automaticMass;
+        set => _def.automaticMass = value;
     }
 }

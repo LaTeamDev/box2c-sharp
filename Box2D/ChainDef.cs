@@ -5,9 +5,7 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class ChainDef {
-    internal b2ChainDef _def;
-    
+public sealed class ChainDef : Def<b2ChainDef> {
     public unsafe object? UserData {
         get => *(object?*)_def.userData;
         set => _def.userData = Unsafe.AsPointer(ref value);

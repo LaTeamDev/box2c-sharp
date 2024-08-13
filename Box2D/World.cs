@@ -9,7 +9,7 @@ public class World : IDisposable {
     private b2WorldId _id;
 
     public unsafe World(WorldDef def) {
-        using var worldDef = def._b2WorldDef.GcPin();
+        using var worldDef = def._def.GcPin();
         _id = B2.CreateWorld(worldDef.Pointer);
     }
 
@@ -30,7 +30,7 @@ public class World : IDisposable {
     }
 
     public unsafe Body CreateBody(BodyDef bodyDef) {
-        using var pin = bodyDef._b2BodyDef.GcPin();
+        using var pin = bodyDef._def.GcPin();
         return new Body(B2.CreateBody(_id, pin.Pointer));
     }
 
@@ -83,39 +83,55 @@ public class World : IDisposable {
     public b2ContactEvents GetContactEvents() =>
         B2.World_GetContactEvents(_id);
 
-    public unsafe void OverlapAABB(AABB aabb, b2QueryFilter filter, b2OverlapResultFcn fcn, object? context = null) =>
-        B2.World_OverlapAABB(_id, aabb, filter, Marshal.GetFunctionPointerForDelegate(fcn), &context);
+    public delegate bool OverlapResultFcn<T>(Body body, ref T context);
+
+    private unsafe static b2OverlapResultFcn _overlapResultFcn = (id, context) => {
+        //Unsafe.AsRef(context);
+        return false;
+    };
     
-    public unsafe void OverlapCircle(ref Circle circle, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, object? context = null) =>
-        B2.World_OverlapCircle(_id, ref circle, transform, filter, fcn, &context);
+    private class OverlapResultFunctionHelper<T> {
+        public T Context;
+        public OverlapResultFcn<T> Fcn;
+        public OverlapResultFunctionHelper(T ctx, OverlapResultFcn<T> fcn) {
+            Context = ctx;
+            Fcn = fcn;
+        }
+    }
+
+    public unsafe void OverlapAABB<T>(AABB aabb, b2QueryFilter filter, b2OverlapResultFcn fcn, T context) =>
+        B2.World_OverlapAABB(_id, aabb, filter, Marshal.GetFunctionPointerForDelegate(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void OverlapCapsule(ref Capsule capsule, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, object? context = null) =>
-        B2.World_OverlapCapsule(_id, ref capsule, transform, filter, fcn, &context);
+    public unsafe void OverlapCircle(ref Circle circle, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, ref object? context) =>
+        B2.World_OverlapCircle(_id, ref circle, transform, filter, fcn, Unsafe.AsPointer(ref context));
     
-    public unsafe void OverlapPolygon(ref Polygon polygon, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, object? context = null) =>
-        B2.World_OverlapPolygon(_id, ref polygon, transform, filter, fcn, &context);
+    public unsafe void OverlapCapsule(ref Capsule capsule, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, ref object? context) =>
+        B2.World_OverlapCapsule(_id, ref capsule, transform, filter, fcn, Unsafe.AsPointer(ref context));
+    
+    public unsafe void OverlapPolygon(ref Polygon polygon, Transform transform, b2QueryFilter filter, b2OverlapResultFcn fcn, ref object? context) =>
+        B2.World_OverlapPolygon(_id, ref polygon, transform, filter, fcn, Unsafe.AsPointer(ref context));
 
     public unsafe void CastRay(Vector2 origin, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn,
-        object? context) =>
-        B2.World_CastRay(_id, origin, translation, filter, fcn, &context);
+        ref object? context) =>
+        B2.World_CastRay(_id, origin, translation, filter, fcn, Unsafe.AsPointer(ref context));
 
     public unsafe void CastRay(Vector2 origin, Vector2 translation, b2QueryFilter filter) =>
         B2.World_CastRayClosest(_id, origin, translation, filter);
     
-    public unsafe void CastCircle(ref Circle circle, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, object? context) =>
-        B2.World_CastCircle(_id, ref circle, originTransform, translation, filter, fcn, &context);
+    public unsafe void CastCircle(ref Circle circle, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, ref object? context) =>
+        B2.World_CastCircle(_id, ref circle, originTransform, translation, filter, fcn, Unsafe.AsPointer(ref context));
     
-    public unsafe void CastCapsule(ref Capsule capsule, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, object? context) =>
-        B2.World_CastCapsule(_id, ref capsule, originTransform, translation, filter, fcn, &context);
+    public unsafe void CastCapsule(ref Capsule capsule, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, ref object? context) =>
+        B2.World_CastCapsule(_id, ref capsule, originTransform, translation, filter, fcn, Unsafe.AsPointer(ref context));
     
-    public unsafe void CastPolygon(ref Polygon polygon, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, object? context) =>
-        B2.World_CastPolygon(_id, ref polygon, originTransform, translation, filter, fcn, &context);
+    public unsafe void CastPolygon(ref Polygon polygon, Transform originTransform, Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, ref object? context) =>
+        B2.World_CastPolygon(_id, ref polygon, originTransform, translation, filter, fcn, Unsafe.AsPointer(ref context));
     
-    public unsafe void SetCustomFilterCallback(b2CustomFilterFcn callback, object? context) =>
-        B2.World_SetCustomFilterCallback(_id, Marshal.GetFunctionPointerForDelegate(callback), &context);
+    public unsafe void SetCustomFilterCallback(b2CustomFilterFcn callback, ref object? context) =>
+        B2.World_SetCustomFilterCallback(_id, Marshal.GetFunctionPointerForDelegate(callback), Unsafe.AsPointer(ref context));
     
-    public unsafe void SetPreSolveCallback(b2CustomFilterFcn callback, object? context) =>
-        B2.World_SetPreSolveCallback(_id, Marshal.GetFunctionPointerForDelegate(callback), &context);
+    public unsafe void SetPreSolveCallback(b2CustomFilterFcn callback, ref object? context) =>
+        B2.World_SetPreSolveCallback(_id, Marshal.GetFunctionPointerForDelegate(callback), Unsafe.AsPointer(ref context));
 
     public b2Profile Profile => B2.World_GetProfile(_id);
 
@@ -123,4 +139,12 @@ public class World : IDisposable {
 
     public void DumpMemoryStats() =>
         B2.World_DumpMemoryStats(_id);
+
+    public DistanceJoint CreateDistanceJoint(DistanceJointDef def) => new(B2.CreateDistanceJoint(_id, ref def._def));
+    public MotorJoint CreateMotorJoint(MotorJointDef def) => new(B2.CreateMotorJoint(_id, ref def._def));
+    public MouseJoint CreateMouseJoint(MouseJointDef def) => new(B2.CreateMouseJoint(_id, ref def._def));
+    public PrismaticJoint CreatePrismaticJoint(PrismaticJointDef def) => new(B2.CreatePrismaticJoint(_id, ref def._def));
+    public RevoluteJoint CreateRevoluteJoint(RevoluteJointDef def) => new(B2.CreateRevoluteJoint(_id, ref def._def));
+    public WeldJoint CreateWeldJoint(WeldJointDef def) => new(B2.CreateWeldJoint(_id, ref def._def));
+    public WheelJoint CreateWheelJoint(WheelJointDef def) => new(B2.CreateWheelJoint(_id, ref def._def));
 }
