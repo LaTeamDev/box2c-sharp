@@ -57,3 +57,4 @@ b2Capsule=@Capsule
 b2Polygon=@Polygon
 b2Segment=@Segment
 b2Hull=@Hull
+b2Version=@Version

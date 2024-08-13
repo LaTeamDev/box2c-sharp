@@ -17,7 +17,7 @@ public static unsafe partial class B2
     public static extern void SetAssertFcn([NativeTypeName("b2AssertFcn *")] IntPtr assertFcn);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2GetVersion", ExactSpelling = true)]
-    public static extern b2Version GetVersion();
+    public static extern Version GetVersion();
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CreateTimer", ExactSpelling = true)]
     public static extern b2Timer CreateTimer();

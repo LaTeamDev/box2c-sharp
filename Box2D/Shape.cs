@@ -96,6 +96,11 @@ public class Shape : IDisposable {
         set => B2.Shape_SetPolygon(_id, ref value);
     }
 
+    public Capsule Capsule {
+        get => B2.Shape_GetCapsule(_id);
+        set => B2.Shape_SetCapsule(_id, ref value);
+    }
+
     public b2ChainId ParentChain {
         get => B2.Shape_GetParentChain(_id);
     }
