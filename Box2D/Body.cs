@@ -5,7 +5,7 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class Body : IDisposable {
+public class Body : IDisposable, IBody {
     internal readonly b2BodyId _id;
     public Body(b2BodyId id) {
         _id = id;
@@ -123,12 +123,12 @@ public class Body : IDisposable {
         set => B2.Body_SetGravityScale(_id, value);
     }
 
-    public bool Awake {
+    public bool IsAwake {
         get => B2.Body_IsAwake(_id);
         set => B2.Body_SetAwake(_id, value);
     }
 
-    public bool SleepEnabled {
+    public bool EnableSleep {
         get => B2.Body_IsSleepEnabled(_id);
         set => B2.Body_EnableSleep(_id, value);
     }
@@ -138,7 +138,7 @@ public class Body : IDisposable {
         set => B2.Body_SetSleepThreshold(_id, value);
     }
 
-    public bool Enabled {
+    public bool IsEnabled {
         get => B2.Body_IsEnabled(_id);
         set { if (value) B2.Body_Enable(_id); else B2.Body_Disable(_id); }
     }
@@ -148,7 +148,7 @@ public class Body : IDisposable {
         set => B2.Body_SetFixedRotation(_id, value);
     }
 
-    public bool Bullet {
+    public bool IsBullet {
         get => B2.Body_IsBullet(_id);
         set => B2.Body_SetBullet(_id, value);
     }
@@ -187,19 +187,19 @@ public class Body : IDisposable {
     public AABB ComputeAABB() => B2.Body_ComputeAABB(_id);
 
     public Shape CreateCircleShape(ShapeDef def, Circle circle) {
-        return new Shape(B2.CreateCircleShape(_id,  ref def._shapeDef, ref circle));
+        return new Shape(B2.CreateCircleShape(_id,  ref def._def, ref circle));
     }
 
     public Shape CreateSegmentShape(ShapeDef def, Segment segment) {
-        return new Shape(B2.CreateSegmentShape(_id,  ref def._shapeDef, ref segment));
+        return new Shape(B2.CreateSegmentShape(_id,  ref def._def, ref segment));
     }
     
     public Shape CreateCapsuleShape(ShapeDef def, Capsule capsule) {
-        return new Shape(B2.CreateCapsuleShape(_id,  ref def._shapeDef, ref capsule));
+        return new Shape(B2.CreateCapsuleShape(_id,  ref def._def, ref capsule));
     }
     
     public Shape CreatePolygonShape(ShapeDef def, Polygon polygon) {
-        return new Shape(B2.CreatePolygonShape(_id,  ref def._shapeDef, ref polygon));
+        return new Shape(B2.CreatePolygonShape(_id,  ref def._def, ref polygon));
     }
 
     public Chain CreateChain(ChainDef def) =>

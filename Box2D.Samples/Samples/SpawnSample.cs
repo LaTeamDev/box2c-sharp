@@ -116,7 +116,7 @@ public class SpawnSample : Sample {
         mouseDef.DampingRatio = 0.7f;
         mouseDef.MaxForce = 1000.0f * queryContext.Body.Mass * World.LengthUnitsPerMeter;
         _mouseJoint = _world.CreateMouseJoint(mouseDef);
-        queryContext.Body.Awake = true;
+        queryContext.Body.IsAwake = true;
     }
 
     private void RemoveJoint() {
@@ -139,7 +139,7 @@ public class SpawnSample : Sample {
         if (_mouseJoint == null) return;
         if (!_mouseJoint.IsValid) return;
         _mouseJoint.Target = p;
-        _mouseJoint.BodyB.Awake = true;
+        _mouseJoint.BodyB.IsAwake = true;
     }
 
     private void UpdateJoint(Vector2 p) {

@@ -1,9 +1,10 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Box2D.Interop;
 
 namespace Box2D; 
 
-public sealed class BodyDef : Def<b2BodyDef> {
+public sealed class BodyDef : Def<b2BodyDef>, IBody {
     public BodyType Type {
         get => (BodyType)_def.type;
         set => _def.type = (b2BodyType)value;
@@ -49,9 +50,9 @@ public sealed class BodyDef : Def<b2BodyDef> {
         set => _def.sleepThreshold = value;
     }
 
-    public unsafe void* UserData {
-        get => _def.userData;
-        set => _def.userData = value;
+    public unsafe object? UserData {
+        get => *(object?*)_def.userData;
+        set => _def.userData = Unsafe.AsPointer(ref value);
     }
 
     public bool EnableSleep {

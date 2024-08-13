@@ -3,7 +3,7 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class Shape : IDisposable {
+public class Shape : IDisposable, IShape {
     internal readonly b2ShapeId _id;
 
     public Shape(b2ShapeId id) {
@@ -51,22 +51,22 @@ public class Shape : IDisposable {
         set => B2.Shape_SetFilter(_id, value);
     }
 
-    public bool SensorEventsEnabled {
+    public bool EnableSensorEvents {
         get => B2.Shape_AreSensorEventsEnabled(_id);
         set => B2.Shape_EnableSensorEvents(_id, value);
     }
 
-    public bool ContactEventsEnabled {
+    public bool EnableContactEvents {
         get => B2.Shape_AreContactEventsEnabled(_id);
         set => B2.Shape_EnableContactEvents(_id, value);
     }
 
-    public bool PreSolveEventsEnabled {
+    public bool EnablePreSolveEvents {
         get => B2.Shape_ArePreSolveEventsEnabled(_id);
         set => B2.Shape_EnablePreSolveEvents(_id, value);
     }
 
-    public bool HitEventsEnabled {
+    public bool EnableHitEvents {
         get => B2.Shape_AreHitEventsEnabled(_id);
         set => B2.Shape_EnableHitEvents(_id, value);
     }

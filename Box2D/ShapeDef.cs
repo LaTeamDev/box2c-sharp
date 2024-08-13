@@ -2,61 +2,59 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class ShapeDef {
-    internal b2ShapeDef _shapeDef = B2.DefaultShapeDef();
-    
+public class ShapeDef : Def<b2ShapeDef>, IShape {
     public float Friction {
-        get => _shapeDef.friction;
-        set => _shapeDef.friction = value;
+        get => _def.friction;
+        set => _def.friction = value;
     }
 
     public float Restitution {
-        get => _shapeDef.restitution;
-        set => _shapeDef.restitution = value;
+        get => _def.restitution;
+        set => _def.restitution = value;
     }
 
     public float Density {
-        get => _shapeDef.density;
-        set => _shapeDef.density = value;
+        get => _def.density;
+        set => _def.density = value;
     }
 
     public b2Filter Filter {
-        get => _shapeDef.filter;
-        set => _shapeDef.filter = value;
+        get => _def.filter;
+        set => _def.filter = value;
     }
 
     public uint CustomColor {
-        get => _shapeDef.customColor;
-        set => _shapeDef.customColor = value;
+        get => _def.customColor;
+        set => _def.customColor = value;
     }
 
     public bool IsSensor {
-        get => _shapeDef.isSensor;
-        set => _shapeDef.isSensor = value;
+        get => _def.isSensor;
+        set => _def.isSensor = value;
     }
 
     public bool EnableSensorEvents {
-        get => _shapeDef.enableSensorEvents;
-        set => _shapeDef.enableSensorEvents = value;
+        get => _def.enableSensorEvents;
+        set => _def.enableSensorEvents = value;
     }
 
     public bool EnableContactEvents {
-        get => _shapeDef.enableContactEvents;
-        set => _shapeDef.enableContactEvents = value;
+        get => _def.enableContactEvents;
+        set => _def.enableContactEvents = value;
     }
 
     public bool EnableHitEvents {
-        get => _shapeDef.enableHitEvents;
-        set => _shapeDef.enableHitEvents = value;
+        get => _def.enableHitEvents;
+        set => _def.enableHitEvents = value;
     }
 
     public bool EnablePreSolveEvents {
-        get => _shapeDef.enablePreSolveEvents;
-        set => _shapeDef.enablePreSolveEvents = value;
+        get => _def.enablePreSolveEvents;
+        set => _def.enablePreSolveEvents = value;
     }
 
     public bool ForceContactCreation {
-        get => _shapeDef.forceContactCreation;
-        set => _shapeDef.forceContactCreation = value;
+        get => _def.forceContactCreation;
+        set => _def.forceContactCreation = value;
     }
 }
