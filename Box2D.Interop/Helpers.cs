@@ -88,4 +88,7 @@ public unsafe partial class B2 {
         Vector2 translation, b2QueryFilter filter, b2CastResultFcn fcn, void* context) =>
         World_CastPolygon(worldId, (Polygon*)Unsafe.AsPointer(ref polygon), originTransform, translation, filter,
             Marshal.GetFunctionPointerForDelegate(fcn), context);
+
+    public static b2ChainId CreateChain(b2BodyId bodyId, ref b2ChainDef chainDef) =>
+        CreateChain(bodyId, (b2ChainDef*)Unsafe.AsPointer(ref chainDef));
 }

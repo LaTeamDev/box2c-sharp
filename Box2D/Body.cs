@@ -32,7 +32,7 @@ public class Body : IDisposable {
 
     public unsafe object? UserData {
         get => *(object?*)B2.Body_GetUserData(_id);
-        set => B2.Body_SetUserData(_id, &value);
+        set => B2.Body_SetUserData(_id, Unsafe.AsPointer(ref value));
     }
 
     public Vector2 Position {
@@ -201,4 +201,7 @@ public class Body : IDisposable {
     public Shape CreatePolygonShape(ShapeDef def, Polygon polygon) {
         return new Shape(B2.CreatePolygonShape(_id,  ref def._shapeDef, ref polygon));
     }
+
+    public Chain CreateChain(ChainDef def) =>
+        new(B2.CreateChain(_id, ref def._def));
 }
