@@ -69,20 +69,15 @@ public class World : IDisposable {
     public bool WarmStarting {
         set => B2.World_EnableWarmStarting(_id, value);
     }
-
-    //Function past this is just a straight binding with little to no changes to tie with
-    //oop stuff i made
-    //TODO: FIXME
     
-    public b2BodyEvents GetBodyEvents() =>
-        B2.World_GetBodyEvents(_id);
+    public BodyEvents GetBodyEvents() =>
+        new(B2.World_GetBodyEvents(_id));
 
-    public b2SensorEvents GetSensorEvents() =>
-        B2.World_GetSensorEvents(_id);
+    public SensorEvents GetSensorEvents() =>
+        new(B2.World_GetSensorEvents(_id));
 
-    public b2ContactEvents GetContactEvents() =>
-        B2.World_GetContactEvents(_id);
-    // other is ok irc
+    public ContactEvents GetContactEvents() =>
+        new(B2.World_GetContactEvents(_id));
 
     public delegate bool OverlapResultFcn<T>(Shape shape, ref T context);
 
