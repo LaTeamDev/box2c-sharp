@@ -21,8 +21,8 @@ public sealed class BodyDef : Def<b2BodyDef>, IBody {
     }
 
     public Vector2 LinearVelocity {
-        get => _def.position;
-        set => _def.position = value;
+        get => _def.linearVelocity;
+        set => _def.linearVelocity = value;
     }
 
     public float AngularVelocity {
