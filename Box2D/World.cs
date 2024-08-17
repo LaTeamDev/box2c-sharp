@@ -21,7 +21,7 @@ public class World : IDisposable {
 
     public bool IsValid => B2.World_IsValid(_id);
 
-    public void Step(float timeStep, int subStepCount) =>
+    public virtual void Step(float timeStep, int subStepCount) =>
         B2.World_Step(_id, timeStep, subStepCount);
 
     public unsafe void Draw(DebugDraw debugDraw) {
@@ -31,7 +31,9 @@ public class World : IDisposable {
 
     public unsafe Body CreateBody(BodyDef bodyDef) {
         using var pin = bodyDef._def.GcPin();
-        return new Body(B2.CreateBody(_id, pin.Pointer));
+        var bodyid = B2.CreateBody(_id, pin.Pointer);
+        Body.__USERDATA_CACHE[bodyid] = bodyDef.UserData;
+        return new Body(bodyid);
     }
 
     public static float LengthUnitsPerMeter {

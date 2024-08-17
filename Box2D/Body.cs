@@ -5,34 +5,19 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class Body : IDisposable, IBody {
-    internal readonly b2BodyId _id;
-    public Body(b2BodyId id) {
-        _id = id;
-    }
+public class Body : B2Object<b2BodyId>, IBody {
+    public Body(b2BodyId id) : base(id) { }
 
-    public void Dispose() {
+    public override void Dispose() {
+        base.Dispose();
         B2.DestroyBody(_id);
     }
-    
-    public override int GetHashCode() => _id.GetHashCode();
-    public override bool Equals(object? obj)
-    {
-        if (obj is not Body body)
-            return false;
-        return _id.Equals(body._id);
-    }
-    
-    public bool IsValid => B2.Body_IsValid(_id);
+
+    public override bool IsValid => B2.Body_IsValid(_id);
 
     public BodyType Type {
         get => (BodyType)B2.Body_GetType(_id);
         set => B2.Body_SetType(_id, (b2BodyType)value);
-    }
-
-    public unsafe object? UserData {
-        get => *(object?*)B2.Body_GetUserData(_id);
-        set => B2.Body_SetUserData(_id, Unsafe.AsPointer(ref value));
     }
 
     public Vector2 Position {
@@ -98,7 +83,11 @@ public class Body : IDisposable, IBody {
     public float InertiaTensor => B2.Body_GetInertiaTensor(_id);
     public Vector2 LocalCenterOfMass => B2.Body_GetLocalCenterOfMass(_id);
     public Vector2 WorldCenterOfMass => B2.Body_GetWorldCenterOfMass(_id);
-    public MassData MassData => (MassData)(object)B2.Body_GetMassData(_id);//will it work? TODO: add setter
+
+    public MassData MassData {
+        get => new(B2.Body_GetMassData(_id));
+        set => B2.Body_SetMassData(_id, value._massData);
+    }
 
     public void ApplyMassFromShapes() =>
         B2.Body_ApplyMassFromShapes(_id);
@@ -157,28 +146,28 @@ public class Body : IDisposable, IBody {
         set => B2.Body_EnableHitEvents(_id, value);
     }
 
-    public int GetShapeCount() => B2.Body_GetShapeCount(_id);
+    public int ShapeCount => B2.Body_GetShapeCount(_id);
 
     public List<Shape> GetShapes() {
-        var array = new b2ShapeId[GetShapeCount()];
+        var array = new b2ShapeId[ShapeCount];
         var count = B2.Body_GetShapes(_id, ref array);
         var stuff = array.ToList().GetRange(0, count);
         return stuff.Select(shapeId => new Shape(shapeId)).ToList();
     }
 
-    public int GetJointCount() => B2.Body_GetJointCount(_id);
+    public int JointCount => B2.Body_GetJointCount(_id);
     
     public List<Joint> GetJoints() {
-        var array = new b2JointId[GetJointCount()];
+        var array = new b2JointId[JointCount];
         var count = B2.Body_GetJoints(_id, ref array);
         var stuff = array.ToList().GetRange(0, count);
         return stuff.Select(jointId => new Joint(jointId)).ToList();
     }
 
-    public int GetContactCapacity() => B2.Body_GetContactCapacity(_id);
+    public int ContactCapacity => B2.Body_GetContactCapacity(_id);
 
     public List<ContactData> GetContactData() {
-        var array = new b2ContactData[GetContactCapacity()];
+        var array = new b2ContactData[ContactCapacity];
         var count = B2.Body_GetContactData(_id, ref array);
         var stuff = array.ToList().GetRange(0, count);
         return stuff.Select(contactData => new ContactData(contactData)).ToList();

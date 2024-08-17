@@ -50,10 +50,7 @@ public sealed class BodyDef : Def<b2BodyDef>, IBody {
         set => _def.sleepThreshold = value;
     }
 
-    public unsafe object? UserData {
-        get => *(object?*)_def.userData;
-        set => _def.userData = Unsafe.AsPointer(ref value);
-    }
+    public object? UserData { get; set; }
 
     public bool EnableSleep {
         get => _def.enableSleep;

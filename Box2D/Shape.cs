@@ -3,14 +3,12 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class Shape : IDisposable, IShape {
-    internal readonly b2ShapeId _id;
+public class Shape : B2Object<b2ShapeId>, IShape {
 
-    public Shape(b2ShapeId id) {
-        _id = id;
-    }
+    public Shape(b2ShapeId id) : base(id) { }
     
-    public void Dispose() {
+    public override void Dispose() {
+        base.Dispose();
         B2.DestroyShape(_id);
     }
     
@@ -22,15 +20,10 @@ public class Shape : IDisposable, IShape {
         return _id.Equals(body._id);
     }
 
-    public bool IsValid => B2.Shape_IsValid(_id);
+    public override bool IsValid => B2.Shape_IsValid(_id);
     public ShapeType Type => (ShapeType) B2.Shape_GetType(_id);
-    public Body Body => new Body(B2.Shape_GetBody(_id)); // is this will work well???
+    public Body Body => new(B2.Shape_GetBody(_id));
     public bool IsSensor => B2.Shape_IsSensor(_id);
-    public unsafe object? UserData {
-        get => *(object?*)B2.Shape_GetUserData(_id);
-        set => B2.Shape_SetUserData(_id, &value);
-    }
-
     public float Density {
         get => B2.Shape_GetDensity(_id);
         set => B2.Shape_SetDensity(_id, value);

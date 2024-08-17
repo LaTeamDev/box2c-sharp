@@ -4,18 +4,16 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class Joint : IDisposable {
-    internal b2JointId _id;
+public class Joint : B2Object<b2JointId> {
+    
+    public Joint(b2JointId id) : base(id) { }
 
-    public Joint(b2JointId id) {
-        _id = id;
-    }
-
-    public void Dispose() {
+    public override void Dispose() {
+        base.Dispose();
         B2.DestroyJoint(_id);
     }
 
-    public bool IsValid => B2.Joint_IsValid(_id);
+    public override bool IsValid => B2.Joint_IsValid(_id);
 
     public JointType Type => (JointType) B2.Joint_GetType(_id);
     public Body BodyA => new(B2.Joint_GetBodyA(_id));
@@ -27,11 +25,6 @@ public class Joint : IDisposable {
     public bool CollideConnected {
         get => B2.Joint_GetCollideConnected(_id);
         set => B2.Joint_SetCollideConnected(_id, value);
-    }
-
-    public unsafe object? UserData {
-        get => *(object?*)B2.Joint_GetUserData(_id);
-        set => B2.Joint_SetUserData(_id, Unsafe.AsPointer(ref value));
     }
 
     public void WakeBodies() => B2.Joint_WakeBodies(_id);
