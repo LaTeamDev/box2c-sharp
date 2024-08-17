@@ -1,0 +1,6 @@
+<Project>
+    <PropertyGroup>
+        <WrapperVersion>1.1</WrapperVersion>
+        <InteropVersion>3.0</InteropVersion>
+    </PropertyGroup>
+</Project>
