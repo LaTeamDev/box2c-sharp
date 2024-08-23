@@ -7,6 +7,8 @@ public class Shape : B2Object<b2ShapeId>, IShape {
 
     public Shape(b2ShapeId id) : base(id) { }
     
+    public static implicit operator Shape(b2ShapeId o) => new(o);
+    
     public override void Dispose() {
         base.Dispose();
         B2.DestroyShape(_id);
@@ -39,7 +41,7 @@ public class Shape : B2Object<b2ShapeId>, IShape {
         set => B2.Shape_SetRestitution(_id, value);
     }
 
-    public b2Filter Filter {
+    public Filter Filter {
         get => B2.Shape_GetFilter(_id);
         set => B2.Shape_SetFilter(_id, value);
     }

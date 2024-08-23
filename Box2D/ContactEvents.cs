@@ -16,6 +16,8 @@ public class ContactEvents {
         public float ApproachSpeed;
     }
     
+    public static implicit operator ContactEvents(b2ContactEvents events) => new(events);
+    
     public unsafe ContactEvents(b2ContactEvents contactEvents) {
         var beginEvents =
             new ReadOnlySpan<b2ContactBeginTouchEvent>(contactEvents.beginEvents, contactEvents.beginCount); //Should i make helpers like this in interop?

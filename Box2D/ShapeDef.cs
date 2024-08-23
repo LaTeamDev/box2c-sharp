@@ -18,8 +18,8 @@ public class ShapeDef : Def<b2ShapeDef>, IShape {
         set => _def.density = value;
     }
 
-    public b2Filter Filter {
-        get => _def.filter;
+    public Filter Filter {
+        get => new(_def.filter);
         set => _def.filter = value;
     }
 

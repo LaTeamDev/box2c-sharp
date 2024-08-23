@@ -9,7 +9,7 @@ public interface IShape {
 
     public float Density { get; set; }
 
-    public b2Filter Filter { get; set; }
+    public Filter Filter { get; set; }
 
     public bool IsSensor { get; }
 

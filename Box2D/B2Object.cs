@@ -31,4 +31,6 @@ public abstract class B2Object<T> : IDisposable {
         return _id.Equals(id);
     }
     public abstract bool IsValid { get; }
+    
+    public static implicit operator T(B2Object<T> o) => o._id;
 }

@@ -72,14 +72,11 @@ public class World : IDisposable {
         set => B2.World_EnableWarmStarting(_id, value);
     }
     
-    public BodyEvents GetBodyEvents() =>
-        new(B2.World_GetBodyEvents(_id));
+    public BodyEvents GetBodyEvents() => B2.World_GetBodyEvents(_id);
 
-    public SensorEvents GetSensorEvents() =>
-        new(B2.World_GetSensorEvents(_id));
+    public SensorEvents GetSensorEvents() => B2.World_GetSensorEvents(_id);
 
-    public ContactEvents GetContactEvents() =>
-        new(B2.World_GetContactEvents(_id));
+    public ContactEvents GetContactEvents() => B2.World_GetContactEvents(_id);
 
     public delegate bool OverlapResultFcn<T>(Shape shape, ref T context);
 

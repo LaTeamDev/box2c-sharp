@@ -7,6 +7,8 @@ namespace Box2D;
 
 public class Body : B2Object<b2BodyId>, IBody {
     public Body(b2BodyId id) : base(id) { }
+    
+    public static implicit operator Body(b2BodyId o) => new(o);
 
     public override void Dispose() {
         base.Dispose();

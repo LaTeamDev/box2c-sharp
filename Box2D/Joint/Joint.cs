@@ -7,6 +7,8 @@ namespace Box2D;
 public class Joint : B2Object<b2JointId> {
     
     public Joint(b2JointId id) : base(id) { }
+    
+    public static implicit operator Joint(b2JointId o) => new(o);
 
     public override void Dispose() {
         base.Dispose();

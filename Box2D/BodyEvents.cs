@@ -7,9 +7,11 @@ public class BodyEvents {
     public class BodyMoveEvent {
         public Transform Transform;
         public Body Body;
-        public object? UserData;
+        //public object? UserData; FIXME: how od we cache this?
         public bool FellAsleep;
     }
+
+    public static implicit operator BodyEvents(b2BodyEvents events) => new(events);
 
     public unsafe BodyEvents(b2BodyEvents bodyEvents) {
         var moveEvents =
@@ -18,7 +20,7 @@ public class BodyEvents {
             BodyMoveEvents.Add(new BodyMoveEvent {
                 Transform = moveEvent.transform,
                 Body = new(moveEvent.bodyId),
-                UserData = *(object?*)moveEvent.userData,
+                //UserData = *(object?*)moveEvent.userData,
                 FellAsleep = moveEvent.fellAsleep
             });
         }

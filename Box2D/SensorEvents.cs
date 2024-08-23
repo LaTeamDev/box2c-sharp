@@ -9,6 +9,8 @@ public class SensorEvents {
     }
     public class BeginTouchEvent : Event { }
     public class EndTouchEvent : Event { }
+
+    public static implicit operator SensorEvents(b2SensorEvents events) => new(events);
     
     public unsafe SensorEvents(b2SensorEvents sensorEvents) {
         var beginEvents =
