@@ -30,6 +30,7 @@ public class Filter : B2Object<b2Filter> {
 }
 
 public class Filter<TEnum> : Filter where TEnum : Enum {
+    public Filter() : this(new b2Filter()) { }
     public Filter(b2Filter id) : base(id) { }
 
     public TEnum Category {
@@ -39,6 +40,6 @@ public class Filter<TEnum> : Filter where TEnum : Enum {
 
     public TEnum Mask {
         get => (TEnum) Enum.ToObject(typeof(TEnum), MaskBits);
-        set => CategoryBits = Convert.ToUInt32(value);
+        set => MaskBits = Convert.ToUInt32(value);
     }
 }

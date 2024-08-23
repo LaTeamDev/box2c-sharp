@@ -15,6 +15,7 @@ public class SampleWindow : Window {
     public override void Load() {
         World.LengthUnitsPerMeter = 128f;
         Sample.Register(new Samples.SpawnSample());
+        Sample.Register(new Samples.MaskedSpawn());
         CurrentSample?.Load();
         _sampleList.Position = Vector2.One * 32f;
         _sampleList.Size = new Vector2(256f, GetScreenHeight() - 64f);
