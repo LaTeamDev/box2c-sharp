@@ -83,8 +83,9 @@ public class World : IDisposable {
     private unsafe static b2OverlapResultFcn _overlapResultBuilder<T>(
         OverlapResultFcn<T> fcn) => (shapeId, context) => fcn(new Shape(shapeId), ref Unsafe.AsRef<T>(context));
 
-    public unsafe void OverlapAABB<T>(AABB aabb, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) => 
+    public unsafe void OverlapAABB<T>(AABB aabb, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
         B2.World_OverlapAABB(_id, aabb, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
+
     
     public unsafe void OverlapCircle<T>(ref Circle circle, Transform transform, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
         B2.World_OverlapCircle(_id, ref circle, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
