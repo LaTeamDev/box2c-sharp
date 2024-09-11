@@ -83,37 +83,37 @@ public class World : IDisposable {
     private unsafe static b2OverlapResultFcn _overlapResultBuilder<T>(
         OverlapResultFcn<T> fcn) => (shapeId, context) => fcn(new Shape(shapeId), ref Unsafe.AsRef<T>(context));
 
-    public unsafe void OverlapAABB<T>(AABB aabb, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
+    public unsafe void OverlapAABB<T>(AABB aabb, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
         B2.World_OverlapAABB(_id, aabb, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
 
     
-    public unsafe void OverlapCircle<T>(ref Circle circle, Transform transform, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
+    public unsafe void OverlapCircle<T>(ref Circle circle, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
         B2.World_OverlapCircle(_id, ref circle, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void OverlapCapsule<T>(ref Capsule capsule, Transform transform, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
+    public unsafe void OverlapCapsule<T>(ref Capsule capsule, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
         B2.World_OverlapCapsule(_id, ref capsule, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void OverlapPolygon<T>(ref Polygon polygon, Transform transform, b2QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
+    public unsafe void OverlapPolygon<T>(ref Polygon polygon, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
         B2.World_OverlapPolygon(_id, ref polygon, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
 
     public delegate float CastResultFcn<T>(Shape shape, Vector2 point, Vector2 normal, float fraction, ref T context);
     private unsafe static b2CastResultFcn _castResultBuilder<T>(
         CastResultFcn<T> fcn) => (shapeId, point, normal, fraction, context) => fcn(new Shape(shapeId), point, normal, fraction, ref Unsafe.AsRef<T>(context));
     
-    public unsafe void CastRay<T>(Vector2 origin, Vector2 translation, b2QueryFilter filter, CastResultFcn<T> fcn,
+    public unsafe void CastRay<T>(Vector2 origin, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn,
         ref T context) =>
         B2.World_CastRay(_id, origin, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
 
-    public unsafe void CastRay(Vector2 origin, Vector2 translation, b2QueryFilter filter) =>
+    public unsafe void CastRay(Vector2 origin, Vector2 translation, QueryFilter filter) =>
         B2.World_CastRayClosest(_id, origin, translation, filter);
     
-    public unsafe void CastCircle<T>(ref Circle circle, Transform originTransform, Vector2 translation, b2QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
+    public unsafe void CastCircle<T>(ref Circle circle, Transform originTransform, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
         B2.World_CastCircle(_id, ref circle, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void CastCapsule<T>(ref Capsule capsule, Transform originTransform, Vector2 translation, b2QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
+    public unsafe void CastCapsule<T>(ref Capsule capsule, Transform originTransform, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
         B2.World_CastCapsule(_id, ref capsule, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
     
-    public unsafe void CastPolygon<T>(ref Polygon polygon, Transform originTransform, Vector2 translation, b2QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
+    public unsafe void CastPolygon<T>(ref Polygon polygon, Transform originTransform, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
         B2.World_CastPolygon(_id, ref polygon, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
 
     public delegate bool CustomFilterFcn<T>(Shape shapeA, Shape shapeB, ref T context);
