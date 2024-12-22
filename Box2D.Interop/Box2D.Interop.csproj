@@ -12,4 +12,24 @@
     <ItemGroup>
       <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
     </ItemGroup>
+    
+    <PropertyGroup>
+        <_box2dlocation>..\Box2D.Native\bin\$(Configuration)\native\bin\$(Configuration)</_box2dlocation>
+    </PropertyGroup>
+
+    <ItemGroup Condition="Exists('$(_box2dlocation)\box2d.dll')">
+        <Content Include="$(_box2dlocation)\box2d.dll">
+            <PackagePath>lib/runtimes/win-x64/native/box2d.dll</PackagePath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup Condition="Exists('$(_box2dlocation)\libbox2d.so')">
+        <Content Include="$(_box2dlocation)\libbox2d.so">
+            <PackagePath>lib/runtimes/linux-x64/native/libbox2d.so</PackagePath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+        </Content>
+    </ItemGroup>
 </Project>
