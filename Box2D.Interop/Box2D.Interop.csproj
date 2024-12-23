@@ -19,6 +19,7 @@
 
     <ItemGroup Condition="Exists('$(_box2dlocation)\box2d.dll')">
         <Content Include="$(_box2dlocation)\box2d.dll">
+            <Link>runtimes/win-x64/native/box2d.dll</Link>
             <PackagePath>lib/runtimes/win-x64/native/box2d.dll</PackagePath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <Pack>true</Pack>
@@ -27,6 +28,7 @@
 
     <ItemGroup Condition="Exists('$(_box2dlocation)\libbox2d.so')">
         <Content Include="$(_box2dlocation)\libbox2d.so">
+            <Link>lib/runtimes/linux-x64/native/libbox2d.so</Link>
             <PackagePath>lib/runtimes/linux-x64/native/libbox2d.so</PackagePath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <Pack>true</Pack>
