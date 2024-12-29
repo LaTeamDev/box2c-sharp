@@ -29,7 +29,7 @@ public class Body : B2Object<b2BodyId>, IBody {
 
     public Rotation Rotation {
         get => B2.Body_GetRotation(_id);
-        set => B2.Body_SetTransform(_id, Position, Rotation);
+        set => B2.Body_SetTransform(_id, Position, value);
     }
 
     public Transform Transform {
