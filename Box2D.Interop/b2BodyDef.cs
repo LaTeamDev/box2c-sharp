@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace Box2D.Interop;
 
 public unsafe partial struct b2BodyDef
@@ -44,6 +42,9 @@ public unsafe partial struct b2BodyDef
 
     [NativeTypeName("_Bool")]
     public bool automaticMass;
+
+    [NativeTypeName("_Bool")]
+    public bool allowFastRotation;
 
     [NativeTypeName("int32_t")]
     public int internalValue;

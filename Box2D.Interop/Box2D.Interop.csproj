@@ -26,9 +26,9 @@
         </Content>
     </ItemGroup>
 
-    <ItemGroup Condition="Exists('$(_box2dlocation)\libbox2d.so')">
-        <Content Include="$(_box2dlocation)\libbox2d.so">
-            <Link>lib/runtimes/linux-x64/native/libbox2d.so</Link>
+    <ItemGroup Condition="Exists('..\Box2D.Native\bin\$(Configuration)\native\src\libbox2d.so.3.0.0')">
+        <Content Include="..\Box2D.Native\bin\$(Configuration)\native\src\libbox2d.so.3.0.0">
+            <Link>runtimes/linux-x64/native/libbox2d.so</Link>
             <PackagePath>lib/runtimes/linux-x64/native/libbox2d.so</PackagePath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <Pack>true</Pack>

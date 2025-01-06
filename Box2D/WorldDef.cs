@@ -58,4 +58,9 @@ public sealed class WorldDef : Def<b2WorldDef> {
         get => _def.enableSleep;
         set => _def.enableSleep = value;
     }
+    
+    public float MaximumLinearVelocity {
+        get => _def.maximumLinearVelocity;
+        set => _def.maximumLinearVelocity = value;
+    }
 }

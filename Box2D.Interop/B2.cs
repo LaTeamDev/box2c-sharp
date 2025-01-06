@@ -17,6 +17,7 @@ public static unsafe partial class B2
     public static extern void SetAssertFcn([NativeTypeName("b2AssertFcn *")] IntPtr assertFcn);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2GetVersion", ExactSpelling = true)]
+    [return: NativeTypeName("b2Version")]
     public static extern Version GetVersion();
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2CreateTimer", ExactSpelling = true)]
@@ -429,18 +430,22 @@ public static unsafe partial class B2
     public static extern b2CastOutput Shape_RayCast(b2ShapeId shapeId, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 origin, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 translation);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_GetCircle", ExactSpelling = true)]
+    [return: NativeTypeName("b2Circle")]
     public static extern Circle Shape_GetCircle(b2ShapeId shapeId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_GetSegment", ExactSpelling = true)]
+    [return: NativeTypeName("b2Segment")]
     public static extern Segment Shape_GetSegment(b2ShapeId shapeId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_GetSmoothSegment", ExactSpelling = true)]
     public static extern b2SmoothSegment Shape_GetSmoothSegment(b2ShapeId shapeId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_GetCapsule", ExactSpelling = true)]
+    [return: NativeTypeName("b2Capsule")]
     public static extern Capsule Shape_GetCapsule(b2ShapeId shapeId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_GetPolygon", ExactSpelling = true)]
+    [return: NativeTypeName("b2Polygon")]
     public static extern Polygon Shape_GetPolygon(b2ShapeId shapeId);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2Shape_SetCircle", ExactSpelling = true)]
@@ -877,24 +882,31 @@ public static unsafe partial class B2
     public static extern bool IsValidRay([NativeTypeName("const b2RayCastInput *")] b2RayCastInput* input);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakePolygon", ExactSpelling = true)]
+    [return: NativeTypeName("b2Polygon")]
     public static extern Polygon MakePolygon([NativeTypeName("const b2Hull *")] Hull* hull, float radius);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeOffsetPolygon", ExactSpelling = true)]
+    [return: NativeTypeName("b2Polygon")]
     public static extern Polygon MakeOffsetPolygon([NativeTypeName("const b2Hull *")] Hull* hull, float radius, [NativeTypeName("b2Transform")] Transform transform);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeSquare", ExactSpelling = true)]
+    [return: NativeTypeName("b2Polygon")]
     public static extern Polygon MakeSquare(float h);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeBox", ExactSpelling = true)]
+    [return: NativeTypeName("b2Polygon")]
     public static extern Polygon MakeBox(float hx, float hy);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeRoundedBox", ExactSpelling = true)]
+    [return: NativeTypeName("b2Polygon")]
     public static extern Polygon MakeRoundedBox(float hx, float hy, float radius);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2MakeOffsetBox", ExactSpelling = true)]
+    [return: NativeTypeName("b2Polygon")]
     public static extern Polygon MakeOffsetBox(float hx, float hy, [NativeTypeName("b2Vec2")] System.Numerics.Vector2 center, float angle);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2TransformPolygon", ExactSpelling = true)]
+    [return: NativeTypeName("b2Polygon")]
     public static extern Polygon TransformPolygon([NativeTypeName("b2Transform")] Transform transform, [NativeTypeName("const b2Polygon *")] Polygon* polygon);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputeCircleMass", ExactSpelling = true)]
@@ -959,6 +971,7 @@ public static unsafe partial class B2
     public static extern b2CastOutput ShapeCastPolygon([NativeTypeName("const b2ShapeCastInput *")] b2ShapeCastInput* input, [NativeTypeName("const b2Polygon *")] Polygon* shape);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ComputeHull", ExactSpelling = true)]
+    [return: NativeTypeName("b2Hull")]
     public static extern Hull ComputeHull([NativeTypeName("const b2Vec2 *")] System.Numerics.Vector2* points, [NativeTypeName("int32_t")] int count);
 
     [DllImport("box2d", CallingConvention = CallingConvention.Cdecl, EntryPoint = "b2ValidateHull", ExactSpelling = true)]

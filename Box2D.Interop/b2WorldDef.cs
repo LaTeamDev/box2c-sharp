@@ -21,6 +21,8 @@ public unsafe partial struct b2WorldDef
 
     public float jointDampingRatio;
 
+    public float maximumLinearVelocity;
+
     [NativeTypeName("_Bool")]
     public bool enableSleep;
 

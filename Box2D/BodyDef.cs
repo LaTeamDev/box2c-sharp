@@ -81,4 +81,9 @@ public sealed class BodyDef : Def<b2BodyDef>, IBody {
         get => _def.automaticMass;
         set => _def.automaticMass = value;
     }
+    
+    public bool AllowFastRotation {
+        get => _def.allowFastRotation;
+        set => _def.allowFastRotation = value;
+    }
 }
