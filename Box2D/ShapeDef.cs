@@ -3,6 +3,7 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class ShapeDef : Def<b2ShapeDef>, IShape {
+    public object? UserData { get; set; }
     public float Friction {
         get => _def.friction;
         set => _def.friction = value;

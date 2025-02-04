@@ -3,6 +3,8 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public interface IShape {
+    public object? UserData { get; set; }
+    
     public float Friction { get; set; }
 
     public float Restitution { get; set; }

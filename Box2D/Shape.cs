@@ -5,14 +5,27 @@ namespace Box2D;
 
 public class Shape : B2Object<b2ShapeId>, IShape {
 
-    public Shape(b2ShapeId id) : base(id) { }
+    public unsafe Shape(b2ShapeId id) : base(id) {
+        var udata = B2.Shape_GetUserData(id);
+        if (udata is not null) {
+            throw new Exception($"Shape {id.index1} has already userdata! have you used native functions?");
+        }
+        B2.Shape_SetUserData(id, (void*)this.Pin().Pointer);
+    }
     
-    public static implicit operator Shape(b2ShapeId o) => new(o);
+    public static unsafe implicit operator Shape(b2ShapeId o) {
+        var udata = B2.Shape_GetUserData(o);
+        if (udata is null) return new(o);
+        var pin = new Pin<Shape>(udata);
+        return pin.Target;
+    }
     
     public override void Dispose() {
         base.Dispose();
         B2.DestroyShape(_id);
     }
+    
+    public object? UserData { get; set; }
     
     public override int GetHashCode() => _id.GetHashCode();
     public override bool Equals(object? obj)
@@ -24,7 +37,7 @@ public class Shape : B2Object<b2ShapeId>, IShape {
 
     public override bool IsValid => B2.Shape_IsValid(_id);
     public ShapeType Type => (ShapeType) B2.Shape_GetType(_id);
-    public Body Body => new(B2.Shape_GetBody(_id));
+    public Body Body => B2.Shape_GetBody(_id);
     public bool IsSensor => B2.Shape_IsSensor(_id);
     public float Density {
         get => B2.Shape_GetDensity(_id);

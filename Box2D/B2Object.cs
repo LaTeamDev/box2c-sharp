@@ -9,15 +9,8 @@ public abstract class B2Object<T> : IDisposable {
         _id = id;
     }
     
-    public object? UserData {
-        get => __USERDATA_CACHE.TryGetValue(_id, out var result) ? result : null;
-        set => __USERDATA_CACHE[_id] = value;
-    }
-    
-    internal static Dictionary<T, object?> __USERDATA_CACHE = new();
-    
     public virtual void Dispose() {
-        __USERDATA_CACHE.Remove(_id);
+        
     }
     
     public override int GetHashCode() => _id.GetHashCode();

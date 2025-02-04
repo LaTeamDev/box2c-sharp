@@ -6,14 +6,28 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class Body : B2Object<b2BodyId>, IBody {
-    public Body(b2BodyId id) : base(id) { }
-    
-    public static implicit operator Body(b2BodyId o) => new(o);
+    public unsafe Body(b2BodyId id) : base(id) {
+        var udata = B2.Body_GetUserData(id);
+        if (udata is not null) {
+            throw new Exception($"Body {id.index1} has already userdata! have you used native functions?");
+        }
+        B2.Body_SetUserData(id, (void*)this.Pin().Pointer);
+    }
 
-    public override void Dispose() {
+    public static unsafe implicit operator Body(b2BodyId o) {
+        var udata = B2.Body_GetUserData(o);
+        if (udata is null) return new(o);
+        var pin = new Pin<Body>(udata);
+        return pin.Target;
+    }
+
+    public override unsafe void Dispose() {
         base.Dispose();
+        new Pin<Body>(B2.Body_GetUserData(_id), true).Dispose();
         B2.DestroyBody(_id);
     }
+
+    public object? UserData { get; set; }
 
     public override bool IsValid => B2.Body_IsValid(_id);
 

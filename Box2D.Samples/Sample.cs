@@ -125,10 +125,10 @@ public abstract class Sample {
         All.Add(sample);
     }
 
+    private RaylibDebugDraw DebugDraw = new RaylibDebugDraw();
     public virtual unsafe void Draw() {
-        Constants.debugDraw.UseDrawingBounds = false;
         BeginMode2D(_camera2D);
-        World.Draw(Constants.debugDraw);
+        World.Draw(DebugDraw);
         EndMode2D();
     }
 
