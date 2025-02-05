@@ -32,7 +32,7 @@ public abstract class Sample {
         public Body? Body;
     }
 
-    private unsafe World.OverlapResultFcn<QueryContext> QueryCallback = (Shape shape, ref QueryContext context) => {
+    private readonly World.OverlapResultFcn<QueryContext> _queryCallback = (shape, context) => {
         var body = shape.Body;
         var bodyType = body.Type;
         if (bodyType != BodyType.Dynamic) {
@@ -62,7 +62,7 @@ public abstract class Sample {
 
         // Query the world for overlapping shapes.
         var queryContext = new QueryContext {Point = p, Body = null };
-        World.OverlapAABB(box, new b2QueryFilter(), QueryCallback, ref queryContext);
+        World.OverlapAABB(box, new QueryFilter(), _queryCallback, queryContext);
 
         if (queryContext.Body is null) return;
         

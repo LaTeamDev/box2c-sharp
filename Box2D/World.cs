@@ -79,65 +79,137 @@ public unsafe class World : IDisposable {
 
     public ContactEvents GetContactEvents() => B2.World_GetContactEvents(_id);
 
-    public delegate bool OverlapResultFcn<T>(Shape shape, ref T context);
-
-    private static b2OverlapResultFcn _overlapResultBuilder<T>(
-        OverlapResultFcn<T> fcn) => (shapeId, context) => fcn(shapeId, ref Unsafe.AsRef<T>(context));
-
-    public void OverlapAABB<T>(AABB aabb, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
-        B2.World_OverlapAABB(_id, aabb, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
-
+    private abstract class OverlapResultContext {
+        public abstract bool RunFunc(Shape shape);
+    }
+    private class OverlapResultContext<T>(OverlapResultFcn<T> func, T? obj) : OverlapResultContext {
+        public override bool RunFunc(Shape shape) =>
+            func(shape, obj);
+    }
     
-    public void OverlapCircle<T>(ref Circle circle, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
-        B2.World_OverlapCircle(_id, ref circle, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
+    public delegate bool OverlapResultFcn<in T>(Shape shape, T? context);
     
-    public void OverlapCapsule<T>(ref Capsule capsule, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
-        B2.World_OverlapCapsule(_id, ref capsule, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
-    
-    public void OverlapPolygon<T>(ref Polygon polygon, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) =>
-        B2.World_OverlapPolygon(_id, ref polygon, transform, filter, _overlapResultBuilder(fcn), Unsafe.AsPointer(ref context));
+    private static b2OverlapResultFcn _overlapResultFcn = (shapeId, context) =>
+        new Pin<OverlapResultContext>(context).Target.RunFunc(shapeId);
 
-    public delegate float CastResultFcn<T>(Shape shape, Vector2 point, Vector2 normal, float fraction, ref T context);
-    private static b2CastResultFcn _castResultBuilder<T>(
-        CastResultFcn<T> fcn) => (shapeId, point, normal, fraction, context) => fcn(new Shape(shapeId), point, normal, fraction, ref Unsafe.AsRef<T>(context));
+    public void OverlapAABB<T>(AABB aabb, QueryFilter filter, OverlapResultFcn<T> fcn, T? context) {
+        var ctx = new OverlapResultContext<T>(fcn, context);
+        using var pin = ctx.Pin();
+        B2.World_OverlapAABB(_id, aabb, filter, _overlapResultFcn, (void*)pin.Pointer);
+    }
+
+    public void OverlapCircle<T>(ref Circle circle, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, T context) {
+        var ctx = new OverlapResultContext<T>(fcn, context);
+        using var pin = ctx.Pin();
+        B2.World_OverlapCircle(_id, ref circle, transform, filter, _overlapResultFcn, (void*)pin.Pointer);
+    }
     
-    public void CastRay<T>(Vector2 origin, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn,
-        ref T context) =>
-        B2.World_CastRay(_id, origin, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
+    public void OverlapCapsule<T>(ref Capsule capsule, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context) {
+        var ctx = new OverlapResultContext<T>(fcn, context);
+        using var pin = ctx.Pin();
+        B2.World_OverlapCapsule(_id, ref capsule, transform, filter, _overlapResultFcn, (void*)pin.Pointer);
+    }
+    
+    public void OverlapPolygon<T>(ref Polygon polygon, Transform transform, QueryFilter filter, OverlapResultFcn<T> fcn, ref T context){
+        var ctx = new OverlapResultContext<T>(fcn, context);
+        using var pin = ctx.Pin();
+        B2.World_OverlapPolygon(_id, ref polygon, transform, filter, _overlapResultFcn, (void*)pin.Pointer);
+    }
+    
+    private abstract class CastResultContext {
+        public abstract float RunFunc(Shape shape, Vector2 point, Vector2 normal, float fraction);
+    }
+    private class CastResultContext<T>(CastResultFcn<T> func, T? obj) : CastResultContext {
+        public override float RunFunc(Shape shape, Vector2 point, Vector2 normal, float fraction) =>
+            func(shape, point, normal, fraction, obj);
+    }
+    
+    public delegate float CastResultFcn<in T>(Shape shape, Vector2 point, Vector2 normal, float fraction, T? context);
+
+    private static b2CastResultFcn _castResultFcn = (shapeId, point, normal, fraction, context) =>
+        new Pin<CastResultContext>(context).Target.RunFunc(shapeId, point, normal, fraction);
+    
+    public void CastRay<T>(Vector2 origin, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn, T? context) {
+        var ctx = new CastResultContext<T>(fcn, context);
+        using var pin = ctx.Pin();
+        B2.World_CastRay(_id, origin, translation, filter, _castResultFcn, (void*)pin.Pointer);
+    }
 
     public void CastRay(Vector2 origin, Vector2 translation, QueryFilter filter) =>
         B2.World_CastRayClosest(_id, origin, translation, filter);
-    
-    public void CastCircle<T>(ref Circle circle, Transform originTransform, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
-        B2.World_CastCircle(_id, ref circle, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
-    
-    public void CastCapsule<T>(ref Capsule capsule, Transform originTransform, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
-        B2.World_CastCapsule(_id, ref capsule, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
-    
-    public void CastPolygon<T>(ref Polygon polygon, Transform originTransform, Vector2 translation, QueryFilter filter, CastResultFcn<T> fcn, ref T context) =>
-        B2.World_CastPolygon(_id, ref polygon, originTransform, translation, filter, _castResultBuilder(fcn), Unsafe.AsPointer(ref context));
 
-    public delegate bool CustomFilterFcn<T>(Shape shapeA, Shape shapeB, ref T context);
-    private static b2CustomFilterFcn _customFilterBuilder<T>(
-        CustomFilterFcn<T> fcn) => (shapeIdA, shapeIdB, context) => fcn(new Shape(shapeIdA), new Shape(shapeIdB), ref Unsafe.AsRef<T>(context));
-
-    private b2CustomFilterFcn _customFilterCallback;
-
-    public void SetCustomFilterCallback<T>(CustomFilterFcn<T> callback, ref T context) {
-        _customFilterCallback = _customFilterBuilder(callback);
-        B2.World_SetCustomFilterCallback(_id, _customFilterCallback, Unsafe.AsPointer(ref context));
+    public void CastCircle<T>(ref Circle circle, Transform originTransform, Vector2 translation, QueryFilter filter,
+        CastResultFcn<T> fcn, ref T context) {
+        var ctx = new CastResultContext<T>(fcn, context);
+        using var pin = ctx.Pin();
+        B2.World_CastCircle(_id, ref circle, originTransform, translation, filter, _castResultFcn, (void*)pin.Pointer);
     }
 
-    // im not sure about b2Manifold and whatever magic stuff behind Unsafe.AsRef
-    public delegate bool PreSolveFcn<T>(Shape shapeA, Shape shapeB, ref b2Manifold manifold, ref T context);
-    private static b2PreSolveFcn _preSolveBuilder<T>(
-        PreSolveFcn<T> fcn) => (shapeIdA, shapeIdB, manifold, context) => fcn(new Shape(shapeIdA), new Shape(shapeIdB), ref Unsafe.AsRef<b2Manifold>(manifold), ref Unsafe.AsRef<T>(context));
+    public void CastCapsule<T>(ref Capsule capsule, Transform originTransform, Vector2 translation, QueryFilter filter,
+        CastResultFcn<T> fcn, T? context) {
+        var ctx = new CastResultContext<T>(fcn, context);
+        using var pin = ctx.Pin();
+        B2.World_CastCapsule(_id, ref capsule, originTransform, translation, filter, _castResultFcn, (void*)pin.Pointer);
+    }
 
-    private b2PreSolveFcn _preSolveCallback;
+    public void CastPolygon<T>(ref Polygon polygon, Transform originTransform, Vector2 translation, QueryFilter filter,
+        CastResultFcn<T> fcn, T? context) {
+        var ctx = new CastResultContext<T>(fcn, context);
+        using var pin = ctx.Pin();
+        B2.World_CastPolygon(_id, ref polygon, originTransform, translation, filter, _castResultFcn, (void*)pin.Pointer);
+    }
+
+    private abstract class CustomFilterContext {
+        public abstract bool RunFunc(Shape shapeA, Shape shapeB);
+    }
+    private class CustomFilterContext<T>(CustomFilterFcn<T> func, T? obj) :CustomFilterContext {
+        public override bool RunFunc(Shape shapeA, Shape shapeB) =>
+            func(shapeA, shapeB, obj);
+    }
+    
+    public delegate bool CustomFilterFcn<in T>(Shape shapeA, Shape shapeB, T? context);
+    
+    private static b2CustomFilterFcn _customFilter = (shapeA, shapeB, context) =>
+        new Pin<CustomFilterContext>(context).Target.RunFunc(shapeA, shapeB);
+
+    private Pin<CustomFilterContext>? _customFilterContext;
+
+    public void SetCustomFilterCallback<T>(CustomFilterFcn<T> fcn, T? context) {
+        _customFilterContext?.Dispose();
+        _customFilterContext = ((CustomFilterContext)new CustomFilterContext<T>(fcn, context)).Pin();
+        B2.World_SetCustomFilterCallback(_id, _customFilter, (void*)_customFilterContext.Pointer);
+    }
+
+    public void RemoveCustomFilterCallback() {
+        _customFilterContext?.Dispose();
+        _customFilterContext = null;
+        B2.World_SetCustomFilterCallback(_id, 0, null);
+    }
+
+    private abstract class PreSolveContext {
+        public abstract bool RunFunc(Shape shapeA, Shape shapeB, ref b2Manifold manifold);
+    }
+    private class PreSolveContext<T>(PreSolveFcn<T> func, T? obj) : PreSolveContext {
+        public override bool RunFunc(Shape shapeA, Shape shapeB, ref b2Manifold manifold) =>
+            func(shapeA, shapeB, ref manifold, obj);
+    }
+    public delegate bool PreSolveFcn<in T>(Shape shapeA, Shape shapeB, ref b2Manifold manifold, T? context);
+
+    private Pin<PreSolveContext>? _preSolveContext;
+    
+    private static b2PreSolveFcn _preSolve = (shapeA, shapeB, manifold, context) =>
+        new Pin<PreSolveContext>(context).Target.RunFunc(shapeA, shapeB, ref Unsafe.AsRef<b2Manifold>(manifold));
 
     public void SetPreSolveCallback<T>(PreSolveFcn<T> callback, ref T context) {
-        _preSolveCallback = _preSolveBuilder(callback);
-        B2.World_SetPreSolveCallback(_id, _preSolveCallback, Unsafe.AsPointer(ref context));
+        _preSolveContext?.Dispose();
+        _preSolveContext = ((PreSolveContext)new PreSolveContext<T>(callback, context)).Pin();
+        B2.World_SetPreSolveCallback(_id, _preSolve, (void*)_preSolveContext.Pointer);
+    }
+
+    public void RemovePreSolveCallback() {
+        _preSolveContext?.Dispose();
+        _preSolveContext = null;
+        B2.World_SetPreSolveCallback(_id, 0, null);
     }
 
     public b2Profile Profile => B2.World_GetProfile(_id);
