@@ -6,6 +6,14 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class Body : B2Object<b2BodyId>, IBody {
+    private World _world;
+    public unsafe Body(World world, BodyDef bodyDef) : 
+        this(B2.CreateBody(world, (b2BodyDef*)Unsafe.AsPointer(ref bodyDef._def))) {
+        UserData = bodyDef.UserData;
+        _world = world;
+        _world.BodyCache.Add(this);
+    }
+    
     public unsafe Body(b2BodyId id) : base(id) {
         var udata = B2.Body_GetUserData(id);
         if (udata is not null) {
@@ -20,11 +28,12 @@ public class Body : B2Object<b2BodyId>, IBody {
         var pin = new Pin<Body>(udata);
         return pin.Target;
     }
-
-    public override unsafe void Dispose() {
-        base.Dispose();
+    
+    public override unsafe void Dispose(bool disposing) {
         new Pin<Body>(B2.Body_GetUserData(_id), true).Dispose();
+        if (!disposing) return;
         B2.DestroyBody(_id);
+        _world.BodyCache.Remove(this);
     }
 
     public object? UserData { get; set; }
@@ -168,7 +177,7 @@ public class Body : B2Object<b2BodyId>, IBody {
         var array = new b2ShapeId[ShapeCount];
         var count = B2.Body_GetShapes(_id, ref array);
         var stuff = array.ToList().GetRange(0, count);
-        return stuff.Select(shapeId => new Shape(shapeId)).ToList();
+        return stuff.Select(shapeId => (Shape)shapeId).ToList();
     }
 
     public int JointCount => B2.Body_GetJointCount(_id);

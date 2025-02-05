@@ -27,20 +27,20 @@ public class ContactEvents {
             new ReadOnlySpan<b2ContactHitEvent>(contactEvents.hitEvents, contactEvents.hitCount);
         foreach (var beginEvent in beginEvents) {
             BeginEvents.Add(new BeginTouchEvent {
-                ShapeA = new(beginEvent.shapeIdA),
-                ShapeB = new(beginEvent.shapeIdB)
+                ShapeA = beginEvent.shapeIdA,
+                ShapeB = beginEvent.shapeIdB
             });
         }
         foreach (var endEvent in endEvents) {
             EndEvents.Add(new EndTouchEvent {
-                ShapeA = new(endEvent.shapeIdA),
-                ShapeB = new(endEvent.shapeIdB)
+                ShapeA = endEvent.shapeIdA,
+                ShapeB = endEvent.shapeIdB
             });
         }
         foreach (var hitEvent in hitEvents) {
             HitEvents.Add(new HitEvent {
-                ShapeA = new(hitEvent.shapeIdA),
-                ShapeB = new(hitEvent.shapeIdB),
+                ShapeA = hitEvent.shapeIdA,
+                ShapeB = hitEvent.shapeIdB,
                 Point =  hitEvent.point,
                 ApproachSpeed = hitEvent.approachSpeed
             });

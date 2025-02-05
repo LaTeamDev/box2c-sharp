@@ -21,6 +21,7 @@ public class Filter : B2Object<b2Filter> {
         set => _id.groupIndex = value;
     }
 
+    public override void Dispose(bool disposing) { }
     public override bool IsValid => true;
     
     public static implicit operator Filter(b2Filter o) => new(o);

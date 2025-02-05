@@ -44,7 +44,7 @@ public class SpawnSample : Sample {
             Type = BodyType.Dynamic,
             Position = position
         };
-        _body = World.CreateBody(def);
+        _body = new Body(World, def);
         _body.CreateCircleShape(new ShapeDef(), new Circle(16f));
     }
 

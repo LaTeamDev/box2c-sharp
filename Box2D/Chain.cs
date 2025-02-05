@@ -6,8 +6,8 @@ public class Chain : B2Object<b2ChainId> {
     public Chain(b2ChainId id) : base(id) { }
     public static implicit operator Chain(b2ChainId o) => new(o);
 
-    public override void Dispose() {
-        base.Dispose();
+    public override void Dispose(bool disposing) {
+        if (!disposing) return;
         B2.DestroyChain(_id);
     }
 

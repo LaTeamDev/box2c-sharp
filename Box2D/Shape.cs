@@ -4,7 +4,6 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class Shape : B2Object<b2ShapeId>, IShape {
-
     public unsafe Shape(b2ShapeId id) : base(id) {
         var udata = B2.Shape_GetUserData(id);
         if (udata is not null) {
@@ -20,8 +19,8 @@ public class Shape : B2Object<b2ShapeId>, IShape {
         return pin.Target;
     }
     
-    public override void Dispose() {
-        base.Dispose();
+    public override void Dispose(bool disposing) {
+        if (!disposing) return;
         B2.DestroyShape(_id);
     }
     

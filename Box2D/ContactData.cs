@@ -20,5 +20,6 @@ public class ContactData : B2Object<b2ContactData> {
         set => _id.shapeIdB = value;
     }
 
+    public override void Dispose(bool disposing) { }
     public override bool IsValid => true;
 }

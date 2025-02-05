@@ -21,8 +21,8 @@ public class Joint : B2Object<b2JointId> {
         return pin.Target;
     }
 
-    public override void Dispose() {
-        base.Dispose();
+    public override void Dispose(bool disposing) {
+        if (!disposing) return;
         B2.DestroyJoint(_id);
     }
 

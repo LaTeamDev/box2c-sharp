@@ -21,7 +21,7 @@ public abstract class Sample {
         var size = new Vector2(GetRenderWidth(), GetRenderHeight());
         var solid = new BodyDef{Position = -size/2};
         var solidShape = new ShapeDef();
-        var l = World.CreateBody(solid);
+        var l = new Body(World, solid);
         l.CreateSegmentShape(solidShape, new Segment(new Vector2(0, 0), new Vector2(0, size.Y)));
         l.CreateSegmentShape(solidShape, new Segment(new Vector2(0, size.Y), new Vector2(size.X, size.Y)));
         l.CreateSegmentShape(solidShape, new Segment(new Vector2(size.X, 0), new Vector2(size.X, size.Y)));
@@ -67,7 +67,7 @@ public abstract class Sample {
         if (queryContext.Body is null) return;
         
         var bodyDef = new BodyDef();
-        _groundBodyId = World.CreateBody(bodyDef);
+        _groundBodyId = new Body(World, bodyDef);
 
         var mouseDef = new MouseJointDef();
         mouseDef.BodyA = _groundBodyId;

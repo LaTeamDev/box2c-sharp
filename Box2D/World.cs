@@ -5,21 +5,37 @@ using Box2D.Interop;
 
 namespace Box2D;
 
-public unsafe class World : IDisposable {
-    private b2WorldId _id;
-
+public unsafe class World : B2Object<b2WorldId> {
     public World(WorldDef def) {
         fixed(b2WorldDef* ptr = &def._def)
             _id = B2.CreateWorld(ptr);
+        _worldIdCache.Add(_id, this);
     }
+
+    public World(b2WorldId id) : base(id) { }
 
     public World() : this(new WorldDef()) { }
 
-    public void Dispose() {
-        B2.DestroyWorld(_id);
+    private static readonly Dictionary<b2WorldId, World> _worldIdCache = new();
+    
+    internal List<Body> BodyCache = [];
+    
+    public static unsafe implicit operator World(b2WorldId o) {
+        if (_worldIdCache.TryGetValue(o, out var world)) return world;
+        return _worldIdCache[o] = new(o);
     }
 
-    public bool IsValid => B2.World_IsValid(_id);
+    public override void Dispose(bool disposing) {
+        if (!disposing) return;
+        foreach (var body in BodyCache) {
+            body.Dispose(false);
+        }
+        BodyCache = null!;
+        B2.DestroyWorld(_id);
+        _worldIdCache.Remove(this);
+    }
+
+    public override bool IsValid => B2.World_IsValid(_id);
 
     public virtual void Step(float timeStep, int subStepCount) =>
         B2.World_Step(_id, timeStep, subStepCount);
@@ -27,14 +43,6 @@ public unsafe class World : IDisposable {
     public void Draw(IDebugDraw debugDraw) {
         using var draw = new ManagedDebugDraw(debugDraw);
         B2.World_Draw(_id, (b2DebugDraw*)Unsafe.AsPointer(ref draw.@interface));
-    }
-
-    public Body CreateBody(BodyDef bodyDef) {
-        fixed (b2BodyDef* ptr = &bodyDef._def) {
-            var body = new Body(B2.CreateBody(_id, ptr));
-            body.UserData = bodyDef.UserData;
-            return body;
-        }
     }
 
     public static float LengthUnitsPerMeter {

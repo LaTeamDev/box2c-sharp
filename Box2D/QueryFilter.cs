@@ -16,6 +16,7 @@ public class QueryFilter : B2Object<b2QueryFilter> {
         set => _id.maskBits = value;
     }
 
+    public override void Dispose(bool disposing) { }
     public override bool IsValid => true;
     
     public static implicit operator QueryFilter(b2QueryFilter o) => new(o);
