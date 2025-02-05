@@ -3,7 +3,25 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class DistanceJoint : Joint {
-    public DistanceJoint(b2JointId id) : base(id) { }
+    public DistanceJoint(b2JointId id) : base(id) {
+        if (B2.Joint_GetType(id) != b2JointType.b2_distanceJoint)
+            throw new InvalidOperationException();
+    }
+
+    public DistanceJoint(World world, DistanceJointDef def) :
+        this(B2.CreateDistanceJoint(world, ref def._def)) {
+        _world = world;
+        _world.JointCache.Add(this);
+    }
+    
+    public static unsafe implicit operator DistanceJoint(b2JointId o) {
+        var udata = B2.Joint_GetUserData(o);
+        if (udata is null) return new(o);
+        var joint = new Pin<Joint>(udata).Target;
+        if (joint.Type == JointType.Distance)
+            return (DistanceJoint)joint;
+        throw new InvalidCastException($"Attempt to cast {joint.GetType()} to {typeof(DistanceJoint)}");
+    }
 
     public float Length {
         get => B2.DistanceJoint_GetLength(_id);

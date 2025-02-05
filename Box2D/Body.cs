@@ -186,7 +186,7 @@ public class Body : B2Object<b2BodyId>, IBody {
         var array = new b2JointId[JointCount];
         var count = B2.Body_GetJoints(_id, ref array);
         var stuff = array.ToList().GetRange(0, count);
-        return stuff.Select(jointId => new Joint(jointId)).ToList();
+        return stuff.Select(jointId => (Joint)jointId).ToList();
     }
 
     public int ContactCapacity => B2.Body_GetContactCapacity(_id);
@@ -215,7 +215,4 @@ public class Body : B2Object<b2BodyId>, IBody {
     public Shape CreatePolygonShape(ShapeDef def, Polygon polygon) {
         return new Shape(B2.CreatePolygonShape(_id,  ref def._def, ref polygon));
     }
-
-    public Chain CreateChain(ChainDef def) =>
-        new(B2.CreateChain(_id, ref def._def));
 }

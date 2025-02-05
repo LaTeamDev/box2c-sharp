@@ -4,7 +4,8 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class Joint : B2Object<b2JointId> {
+public abstract class Joint : B2Object<b2JointId> {
+    internal protected World _world;
     
     public unsafe Joint(b2JointId id) : base(id) {
         var udata = B2.Joint_GetUserData(id);
@@ -13,17 +14,19 @@ public class Joint : B2Object<b2JointId> {
         }
         B2.Joint_SetUserData(id, (void*)this.Pin().Pointer);
     }
-
+    
     public static unsafe implicit operator Joint(b2JointId o) {
         var udata = B2.Joint_GetUserData(o);
-        if (udata is null) return new(o);
+        if (udata is null) throw new Exception("no such joint exists in managed");
         var pin = new Pin<Joint>(udata);
         return pin.Target;
     }
 
-    public override void Dispose(bool disposing) {
+    public override unsafe void Dispose(bool disposing) {
+        new Pin<Body>(B2.Joint_GetUserData(_id), true).Dispose();
         if (!disposing) return;
         B2.DestroyJoint(_id);
+        _world.JointCache.Remove(this);
     }
 
     public override bool IsValid => B2.Joint_IsValid(_id);

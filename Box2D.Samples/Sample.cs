@@ -76,7 +76,7 @@ public abstract class Sample {
         mouseDef.Hertz = 5.0f;
         mouseDef.DampingRatio = 0.7f;
         mouseDef.MaxForce = 1000.0f * queryContext.Body.Mass * World.LengthUnitsPerMeter;
-        _mouseJoint = World.CreateMouseJoint(mouseDef);
+        _mouseJoint = new MouseJoint(World, mouseDef);
         queryContext.Body.IsAwake = true;
     }
 

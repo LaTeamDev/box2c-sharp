@@ -108,7 +108,7 @@ public class Shape : B2Object<b2ShapeId>, IShape {
         set => B2.Shape_SetCapsule(_id, ref value);
     }
 
-    public b2ChainId ParentChain {
+    public Chain ParentChain {
         get => B2.Shape_GetParentChain(_id);
     }
 

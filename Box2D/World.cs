@@ -19,6 +19,7 @@ public unsafe class World : B2Object<b2WorldId> {
     private static readonly Dictionary<b2WorldId, World> _worldIdCache = new();
     
     internal List<Body> BodyCache = [];
+    internal List<Joint> JointCache = [];
     
     public static unsafe implicit operator World(b2WorldId o) {
         if (_worldIdCache.TryGetValue(o, out var world)) return world;
@@ -31,6 +32,10 @@ public unsafe class World : B2Object<b2WorldId> {
             body.Dispose(false);
         }
         BodyCache = null!;
+        foreach (var body in JointCache) {
+            body.Dispose(false);
+        }
+        JointCache = null!;
         B2.DestroyWorld(_id);
         _worldIdCache.Remove(this);
     }
@@ -226,12 +231,4 @@ public unsafe class World : B2Object<b2WorldId> {
 
     public void DumpMemoryStats() =>
         B2.World_DumpMemoryStats(_id);
-
-    public DistanceJoint CreateDistanceJoint(DistanceJointDef def) => new(B2.CreateDistanceJoint(_id, ref def._def));
-    public MotorJoint CreateMotorJoint(MotorJointDef def) => new(B2.CreateMotorJoint(_id, ref def._def));
-    public MouseJoint CreateMouseJoint(MouseJointDef def) => new(B2.CreateMouseJoint(_id, ref def._def));
-    public PrismaticJoint CreatePrismaticJoint(PrismaticJointDef def) => new(B2.CreatePrismaticJoint(_id, ref def._def));
-    public RevoluteJoint CreateRevoluteJoint(RevoluteJointDef def) => new(B2.CreateRevoluteJoint(_id, ref def._def));
-    public WeldJoint CreateWeldJoint(WeldJointDef def) => new(B2.CreateWeldJoint(_id, ref def._def));
-    public WheelJoint CreateWheelJoint(WheelJointDef def) => new(B2.CreateWheelJoint(_id, ref def._def));
 }

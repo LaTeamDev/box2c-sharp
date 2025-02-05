@@ -3,7 +3,25 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class PrismaticJoint : Joint {
-    public PrismaticJoint(b2JointId id) : base(id) { }
+    public PrismaticJoint(b2JointId id) : base(id) {
+        if (B2.Joint_GetType(id) != b2JointType.b2_prismaticJoint)
+            throw new InvalidOperationException();
+    }
+
+    public PrismaticJoint(World world, PrismaticJointDef def) :
+        this(B2.CreatePrismaticJoint(world, ref def._def)) {
+        _world = world;
+        _world.JointCache.Add(this);
+    }
+    
+    public static unsafe implicit operator PrismaticJoint(b2JointId o) {
+        var udata = B2.Joint_GetUserData(o);
+        if (udata is null) return new(o);
+        var joint = new Pin<Joint>(udata).Target;
+        if (joint.Type == JointType.Prismatic)
+            return (PrismaticJoint)joint;
+        throw new InvalidCastException($"Attempt to cast {joint.GetType()} to {typeof(PrismaticJoint)}");
+    }
 
     public bool SpringEnabled {
         get => B2.PrismaticJoint_IsSpringEnabled(_id);

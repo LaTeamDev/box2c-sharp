@@ -19,14 +19,14 @@ public class SensorEvents {
             new ReadOnlySpan<b2SensorBeginTouchEvent>(sensorEvents.endEvents, sensorEvents.endCount);
         foreach (var beginEvent in beginEvents) {
             BeginEvents.Add(new BeginTouchEvent {
-                SensorShape = new(beginEvent.sensorShapeId),
-                VisitorShape = new(beginEvent.visitorShapeId)
+                SensorShape = beginEvent.sensorShapeId,
+                VisitorShape = beginEvent.visitorShapeId
             });
         }
         foreach (var endEvent in endEvents) {
             EndEvents.Add(new EndTouchEvent {
-                SensorShape = new(endEvent.sensorShapeId),
-                VisitorShape = new(endEvent.visitorShapeId)
+                SensorShape = endEvent.sensorShapeId,
+                VisitorShape = endEvent.visitorShapeId
             });
         }
     }

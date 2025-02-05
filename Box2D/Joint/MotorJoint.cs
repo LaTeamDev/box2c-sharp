@@ -4,7 +4,25 @@ using Box2D.Interop;
 namespace Box2D; 
 
 public class MotorJoint : Joint {
-    public MotorJoint(b2JointId id) : base(id) { }
+    public MotorJoint(b2JointId id) : base(id) {
+        if (B2.Joint_GetType(id) != b2JointType.b2_motorJoint)
+            throw new InvalidOperationException();
+    }
+
+    public MotorJoint(World world, MotorJointDef def) :
+        this(B2.CreateMotorJoint(world, ref def._def)) {
+        _world = world;
+        _world.JointCache.Add(this);
+    }
+    
+    public static unsafe implicit operator MotorJoint(b2JointId o) {
+        var udata = B2.Joint_GetUserData(o);
+        if (udata is null) return new(o);
+        var joint = new Pin<Joint>(udata).Target;
+        if (joint.Type == JointType.Motor)
+            return (MotorJoint)joint;
+        throw new InvalidCastException($"Attempt to cast {joint.GetType()} to {typeof(MotorJoint)}");
+    }
 
     public Vector2 LinearOffset {
         get => B2.MotorJoint_GetLinearOffset(_id);
