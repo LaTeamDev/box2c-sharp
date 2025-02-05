@@ -4,8 +4,8 @@ using Box2D.Interop;
 namespace Box2D;
 
 public interface IDebugDraw {
-    public void Polygon(Vector2[] pos, b2HexColor color);
-    public void SolidPolygon(Transform transform, Vector2[] pos, b2HexColor color);
+    public void Polygon(Span<Vector2> pos, b2HexColor color);
+    public void SolidPolygon(Transform transform, Span<Vector2> pos, b2HexColor color);
     public void Circle(Vector2 pos, float radius, b2HexColor color);
     public void SolidCircle(Transform transform, float radius, b2HexColor color);
     public void Capsule(Vector2 start, Vector2 end, float radius, b2HexColor color);

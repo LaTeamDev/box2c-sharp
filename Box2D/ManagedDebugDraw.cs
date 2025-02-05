@@ -8,73 +8,62 @@ namespace Box2D;
 internal sealed unsafe class ManagedDebugDraw : IDisposable {
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawPolygon(Vector2* vector, int count, b2HexColor color, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
-        var array = new Span<Vector2>(vector, count).ToArray();
-        draw.Polygon(array, color);
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
+        draw?.Polygon(new Span<Vector2>(vector, count), color);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawSolidPolygon(Transform transform, Vector2* vector, int count, b2HexColor color, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
-        var array = new Span<Vector2>(vector, count).ToArray();
-        draw.SolidPolygon(transform, array, color);
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
+        var array = new Span<Vector2>(vector, count);
+        draw?.SolidPolygon(transform, array, color);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawCircle(Vector2 pos, float radius, b2HexColor color, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
-        draw.Circle(pos, radius, color);
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
+        draw?.Circle(pos, radius, color);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawSolidCircle(Transform transform, float radius, b2HexColor color, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
         draw.SolidCircle(transform, radius, color);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawCapsule(Vector2 start, Vector2 end, float radius, b2HexColor color, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
         draw.Capsule(start, end, radius, color);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawSolidCapsule(Vector2 start, Vector2 end, float radius, b2HexColor color, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
         draw.SolidCapsule(start, end, radius, color);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawSegment(Vector2 start, Vector2 end, b2HexColor color, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
         draw.Segment(start, end, color);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawTransform(Transform transform, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
         draw.Transform(transform);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawPoint(Vector2 pos, float radius, b2HexColor color, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
         draw.Point(pos, radius, color);
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static void DrawString(Vector2 pos, IntPtr strPtr, void* ctx) {
-        var pin = new Pin<IDebugDraw>(ctx);
-        if (!pin.TryGetTarget(out var draw)) return;
+        var draw = GCHandle.FromIntPtr((IntPtr)ctx).Target as IDebugDraw;
         var str = Marshal.PtrToStringUTF8(strPtr);
         if (str is null) return;
         draw.String(pos, str);

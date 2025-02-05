@@ -4,13 +4,13 @@ using Box2D.Interop;
 namespace Box2D;
 
 public class RaylibDebugDraw : IDebugDraw {
-    public unsafe void Polygon(Vector2[] pos, b2HexColor color) {
+    public unsafe void Polygon(Span<Vector2> pos, b2HexColor color) {
         //idk how to draw polygons in raylib honestly
         fixed(Vector2* ptr = pos)
             DrawLineStrip(ptr, pos.Length, color.ToRaylib());
     }
     
-    public unsafe void SolidPolygon(Transform transform, Vector2[] pos, b2HexColor color) {
+    public unsafe void SolidPolygon(Transform transform, Span<Vector2> pos, b2HexColor color) {
         fixed(Vector2* ptr = pos)
             DrawLineStrip(ptr, pos.Length, color.ToRaylib());
     }
