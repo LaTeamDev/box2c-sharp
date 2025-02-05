@@ -3,7 +3,7 @@ using Box2D.Interop;
 
 namespace Box2D; 
 
-public class Shape : B2Object<b2ShapeId>, IShape {
+public abstract class Shape : B2Object<b2ShapeId>, IShape {
     public unsafe Shape(b2ShapeId id) : base(id) {
         var udata = B2.Shape_GetUserData(id);
         if (udata is not null) {
@@ -14,7 +14,7 @@ public class Shape : B2Object<b2ShapeId>, IShape {
     
     public static unsafe implicit operator Shape(b2ShapeId o) {
         var udata = B2.Shape_GetUserData(o);
-        if (udata is null) return new(o);
+        if (udata is null) throw new Exception();
         var pin = new Pin<Shape>(udata);
         return pin.Target;
     }
@@ -84,32 +84,12 @@ public class Shape : B2Object<b2ShapeId>, IShape {
     public b2CastOutput RayCast(Vector2 origin, Vector2 translation) =>
         B2.Shape_RayCast(_id, origin, translation);
 
-    public Circle Circle {
-        get => B2.Shape_GetCircle(_id);
-        set => B2.Shape_SetCircle(_id, ref value);
-    }
-
-    public Segment Segment {
-        get => B2.Shape_GetSegment(_id);
-        set => B2.Shape_SetSegment(_id, ref value);
-    }
-
-    public b2SmoothSegment SmoothSegment {
-        get => B2.Shape_GetSmoothSegment(_id);
-    }
-
-    public Polygon Polygon {
-        get => B2.Shape_GetPolygon(_id);
-        set => B2.Shape_SetPolygon(_id, ref value);
-    }
-
-    public Capsule Capsule {
-        get => B2.Shape_GetCapsule(_id);
-        set => B2.Shape_SetCapsule(_id, ref value);
-    }
-
-    public Chain ParentChain {
-        get => B2.Shape_GetParentChain(_id);
+    public Chain? ParentChain {
+        get {
+            var shapeId = B2.Shape_GetParentChain(_id);
+            if (shapeId.Equals(B2.b2_nullChainId)) return null;
+            return shapeId;
+        }
     }
 
     public int GetContactCapacity() => B2.Shape_GetContactCapacity(_id);

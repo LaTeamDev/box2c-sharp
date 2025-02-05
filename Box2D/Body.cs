@@ -200,19 +200,15 @@ public class Body : B2Object<b2BodyId>, IBody {
 
     public AABB ComputeAABB() => B2.Body_ComputeAABB(_id);
 
-    public Shape CreateCircleShape(ShapeDef def, Circle circle) {
-        return new Shape(B2.CreateCircleShape(_id,  ref def._def, ref circle));
-    }
+    public CircleShape CreateCircleShape(ShapeDef def, Circle circle) =>
+        new(this, def, circle);
 
-    public Shape CreateSegmentShape(ShapeDef def, Segment segment) {
-        return new Shape(B2.CreateSegmentShape(_id,  ref def._def, ref segment));
-    }
+    public SegmentShape CreateSegmentShape(ShapeDef def, Segment segment) =>
+        new SegmentShape(this, def, segment);
     
-    public Shape CreateCapsuleShape(ShapeDef def, Capsule capsule) {
-        return new Shape(B2.CreateCapsuleShape(_id,  ref def._def, ref capsule));
-    }
+    public CapsuleShape CreateCapsuleShape(ShapeDef def, Capsule capsule) =>
+        new CapsuleShape(this, def, capsule);
     
-    public Shape CreatePolygonShape(ShapeDef def, Polygon polygon) {
-        return new Shape(B2.CreatePolygonShape(_id,  ref def._def, ref polygon));
-    }
+    public PolygonShape CreatePolygonShape(ShapeDef def, Polygon polygon) =>
+        new PolygonShape(this, def, polygon);
 }

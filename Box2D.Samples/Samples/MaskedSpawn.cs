@@ -25,8 +25,8 @@ public class MaskedSpawn : Sample {
         _body.CreateCircleShape(new ShapeDef {
             Filter = new Filter<Filter> {
                 Category = filter,
-                Mask = Filter.All ^ filter
-            }
+                Mask = Filter.All ^ filter,
+            },
         }, new Circle(16f));
     }
 
